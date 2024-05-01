@@ -22,14 +22,14 @@ jobs:
           id: allure # used in comment to PR
           with:
             report_id: 'self-test'
-            gh_pages: 'gh-pages-dir'
+            gh_pages: 'gha-allure'
             report_dir: 'allure-results'
       
         - name: Git Commit and Push Action
           uses: mgrybyk/git-commit-pull-push-action@v1
           if: always()
           with:
-            # repository: gh-pages-dir
+            repository: gha-allure
             branch: gh-pages
             pull_args: --rebase -X ours
 
@@ -43,4 +43,4 @@ jobs:
               ${{ steps.allure.outputs.test_result_icon }} [Allure Report](${{ steps.allure.outputs.report_url }}) | [History](${{ steps.allure.outputs.report_history_url }})
             comment_tag: allure_report
             mode: recreate
-
+            
