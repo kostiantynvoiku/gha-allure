@@ -1,38 +1,45 @@
 name: Run tests and publish report
-on: workflow_dispatch
+on: [pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v3
+        - name: Checkout gh-pages
+          uses: actions/checkout@v3
+          if: always()
+          continue-on-error: true
+          with:
+            ref: gh-pages # branch name
+            path: gh-pages-dir # checkout path
+      
+        - name: Allure Report Action
+          uses: mgrybyk/allure-report-branch-action@v1
+          if: always()
+          continue-on-error: true
+          id: allure # used in comment to PR
+          with:
+            report_id: 'self-test'
+            gh_pages: 'gh-pages-dir'
+            report_dir: 'allure-results'
+      
+        - name: Git Commit and Push Action
+          uses: mgrybyk/git-commit-pull-push-action@v1
+          if: always()
+          with:
+            repository: gh-pages-dir
+            branch: gh-pages
+            pull_args: --rebase -X ours
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: zulu
-          java-version: 17
-
-      - name: Load test report history
-        uses: actions/checkout@v3
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Build test report
-        uses: simple-elf/allure-report-action@v1.7
-        if: always()
-        with:
-          gh_pages: gh-pages
-          allure_history: allure-history
-          allure_results: ./**/allure-results
-
-      - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
+            # After publishing to gh-pages
+        - name: Comment PR with Allure Report link
+          if: ${{ always() && github.event_name == 'pull_request' && steps.allure.outputs.report_url }}
+          continue-on-error: true
+          uses: thollander/actions-comment-pull-request@v2
+          with:
+            message: |
+              ${{ steps.allure.outputs.test_result_icon }} [Allure Report](${{ steps.allure.outputs.report_url }}) | [History](${{ steps.allure.outputs.report_history_url }})
+            comment_tag: allure_report
+            mode: recreate
