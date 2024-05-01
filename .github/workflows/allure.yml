@@ -16,7 +16,7 @@ jobs:
             path: gh-pages-dir # checkout path
 
         - run: |
-            ls
+            ls gh-pages-dir
       
         - name: Allure Report Action
           uses: mgrybyk/allure-report-branch-action@v1
