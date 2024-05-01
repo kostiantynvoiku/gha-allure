@@ -21,7 +21,7 @@ jobs:
         continue-on-error: true
         with:
           ref: gh-pages # branch name
-          path: gh-pages-dir # checkout path
+          path: gh-pages # checkout path
   
       - name: Allure Report Action
         uses: mgrybyk/allure-report-branch-js-action@v1
@@ -30,14 +30,14 @@ jobs:
         id: allure # used in comment to PR
         with:
           report_id: 'e2e'
-          gh_pages: 'gh-pages-dir'
+          gh_pages: 'gh-pages'
           report_dir: 'allure-results'
     
       - name: Git Commit and Push Action
         uses: mgrybyk/git-commit-pull-push-action@v1
         if: always()
         with:
-          repository: gh-pages-dir
+          repository: gh-pages
           branch: gh-pages
           pull_args: --rebase -X ours
 
