@@ -29,7 +29,7 @@ jobs:
           uses: mgrybyk/git-commit-pull-push-action@v1
           if: always()
           with:
-            repository: gh-pages-dir
+            # repository: gh-pages-dir
             branch: gh-pages
             pull_args: --rebase -X ours
 
@@ -43,4 +43,4 @@ jobs:
               ${{ steps.allure.outputs.test_result_icon }} [Allure Report](${{ steps.allure.outputs.report_url }}) | [History](${{ steps.allure.outputs.report_history_url }})
             comment_tag: allure_report
             mode: recreate
-            
+
