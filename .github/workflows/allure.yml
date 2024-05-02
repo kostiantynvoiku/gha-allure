@@ -33,7 +33,7 @@ jobs:
         with:
           report_id: 'e2e'
           gh_pages: 'gh-pages'
-          report_dir: 'allure-results/**/'
+          report_dir: './allure-results/*/allure-results'
     
       - name: Git Commit and Push Action
         uses: mgrybyk/git-commit-pull-push-action@v1
