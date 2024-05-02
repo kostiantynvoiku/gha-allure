@@ -12,10 +12,13 @@ jobs:
         uses: actions/checkout@v4
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
-      - name: Cypress run
+      - name: Cypress run Component
         uses: cypress-io/github-action@v6
         with:
           component: true
+
+      - name: Cypress run E2E
+        uses: cypress-io/github-action@v6
 
       - name: Checkout gh-pages
         uses: actions/checkout@v3
@@ -33,7 +36,7 @@ jobs:
         with:
           report_id: 'e2e'
           gh_pages: 'gh-pages'
-          report_dir: './allure-results/component/allure-results'
+          report_dir: './allure-results/component/allure-results ./allure-results/e2e/allure-results'
     
       - name: Git Commit and Push Action
         uses: mgrybyk/git-commit-pull-push-action@v1
