@@ -14,10 +14,4 @@ describe('MyComponent', () => {
     cy.contains('Hello, World!');
   });
 
-  it('should render "Hello, World!"', () => {
-    cy.contains('Hello, World!!');
-  });
-
-
-
 });
