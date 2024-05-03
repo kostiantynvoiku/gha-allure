@@ -92,7 +92,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "Passed: ${{ steps.allure.outputs.test_result_passed }}, Failed: ${{ steps.allure.outputs.test_result_failed }}, Total: ${{ steps.allure.outputs.test_result_total }}"
+                        "text": "✅ Passed: ${{ steps.allure.outputs.test_result_passed }}, ❌ Failed: ${{ steps.allure.outputs.test_result_failed }}, 🧪 Total: ${{ steps.allure.outputs.test_result_total }}"
                       }
                     },
                     {
