@@ -25,7 +25,7 @@ import "allure-cypress/commands";
 import * as allure from 'allure-cypress';
 
 beforeEach(() => {
-  allure.epic('🧪 COMPONENT TESTS');
+  allure.epic('⚙️ COMPONENT TESTS');
 });
 
 Cypress.Commands.add('mount', mount)

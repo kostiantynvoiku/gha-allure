@@ -4,9 +4,7 @@ const { allureCypress } = require("allure-cypress/reporter");
 module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      allureCypress(on, {
-        resultsDir: "allure-results",
-      });
+			allureCypress(on);
       return config;
     },
   },
@@ -17,9 +15,7 @@ module.exports = defineConfig({
       bundler: "webpack",
     },
 		setupNodeEvents(on, config) {
-			allureCypress(on, {
-        resultsDir: 'allure-results',
-      });
+			allureCypress(on);
       return config;
 		},
   },
