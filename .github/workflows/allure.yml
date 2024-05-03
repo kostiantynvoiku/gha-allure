@@ -120,7 +120,7 @@ jobs:
                           "url": "${{ steps.allure.outputs.report_history_url }}"
                         }
                       ]
-                    },
+                    }
                   ]
                 }
               ]
