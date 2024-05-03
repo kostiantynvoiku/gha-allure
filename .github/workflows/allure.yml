@@ -71,6 +71,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.26.0
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
         with:
           channel-id: 'C072KH2MPBJ'
           payload: |
@@ -85,7 +86,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "🤖 Run *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|#${{ github.run_number }}>* finished on `${{ github.ref_name }}` branch with the status: ${{ steps.allure.outputs.test_result_icon }} *${{ steps.allure.outputs.test_result }}*"
+                        "text": "🤖 Run *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|#${{ github.run_number }}>* finished on `${{ env.BRANCH_NAME }}` branch with the status: ${{ steps.allure.outputs.test_result_icon }} *${{ steps.allure.outputs.test_result }}*"
                       }
                     },
                     {
