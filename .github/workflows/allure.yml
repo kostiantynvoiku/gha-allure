@@ -69,6 +69,8 @@ jobs:
       - name: 📩 POST MESSAGE TO SLACK
         if: always()
         uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: 'C072KH2MPBJ'
           payload: |
@@ -83,14 +85,14 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "⏰ Run *<#${{ github.run_number }}>* finished on `${{ github.ref_name }}` with the status: ${{ steps.allure.outputs.test_result_icon }} *${{ steps.allure.outputs.test_result }}*"
+                        "text": "🤖 Run *<#${{ github.run_number }}>* finished on `${{ github.ref_name }}` branch with the status: ${{ steps.allure.outputs.test_result_icon }} *${{ steps.allure.outputs.test_result }}*"
                       }
                     },
                     {
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "✔ Passed: ${{ steps.allure.outputs.test_result_passed }}, ✖ Failed: ${{ steps.allure.outputs.test_result_failed }}"
+                        "text": "Passed: ${{ steps.allure.outputs.test_result_passed }}, Failed: ${{ steps.allure.outputs.test_result_failed }}, Total: ${{ steps.allure.outputs.test_result_total }}"
                       }
                     },
                     {
@@ -126,5 +128,3 @@ jobs:
               ]
             }
             
-env:
-  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
