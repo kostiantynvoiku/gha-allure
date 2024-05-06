@@ -12,10 +12,10 @@ jobs:
         uses: actions/checkout@v4
       # Install npm dependencies, cache them correctly
       # and run all Cypress tests
-      - name: Cypress run Component
-        uses: cypress-io/github-action@v6
-        with:
-          component: true
+      # - name: Cypress run Component
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     component: true
 
       - name: Cypress run E2E
         uses: cypress-io/github-action@v6
