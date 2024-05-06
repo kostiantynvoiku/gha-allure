@@ -76,7 +76,7 @@ jobs:
           channel-id: 'C072KH2MPBJ'
           payload: |
             {
-              "text": "",
+              "text": "🤖 Run *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|#${{ github.run_number }}>* finished on `${{ env.BRANCH_NAME }}` branch with the status: ${{ steps.allure.outputs.test_result_icon }} *${{ steps.allure.outputs.test_result }}*"
               "dispatch_action": true,
               "attachments": [
                 {
@@ -107,20 +107,6 @@ jobs:
                             "emoji": true
                           },
                           "url": "${{ steps.allure.outputs.report_url }}"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "actions",
-                      "elements": [
-                        {
-                          "type": "button",
-                          "text": {
-                            "type": "plain_text",
-                            "text": "ALLURE HISTORY",
-                            "emoji": true
-                          },
-                          "url": "${{ steps.allure.outputs.report_history_url }}"
                         }
                       ]
                     }
