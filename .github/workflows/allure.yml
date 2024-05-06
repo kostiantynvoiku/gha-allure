@@ -77,7 +77,6 @@ jobs:
           payload: |
             {
               "text": "🤖 Run *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|#${{ github.run_number }}>* finished on `${{ env.BRANCH_NAME }}` branch with the status: ${{ steps.allure.outputs.test_result_icon }} *${{ steps.allure.outputs.test_result }}*"
-              "dispatch_action": true,
               "attachments": [
                 {
                   "color": "${{ env.SLACK_COLOR }}",
