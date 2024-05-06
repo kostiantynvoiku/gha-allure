@@ -70,7 +70,7 @@ jobs:
         if: always()
         uses: slackapi/slack-github-action@v1.26.0
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN_ALLURE }}
           BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
         with:
           channel-id: 'C072KH2MPBJ'
@@ -101,8 +101,7 @@ jobs:
                           "type": "button",
                           "text": {
                             "type": "plain_text",
-                            "text": "ALLURE REPORT",
-                            "emoji": true
+                            "text": "ALLURE REPORT"
                           },
                           "url": "${{ steps.allure.outputs.report_url }}"
                         }
