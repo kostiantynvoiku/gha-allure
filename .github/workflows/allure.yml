@@ -88,6 +88,15 @@ jobs:
                       }
                     },
                     {
+                      "type": "context",
+                      "elements": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "Project: DWX"
+                        }
+                      ]
+                    },
+                    {
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
@@ -104,15 +113,6 @@ jobs:
                             "text": "ALLURE REPORT"
                           },
                           "url": "${{ steps.allure.outputs.report_url }}"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "context",
-                      "elements": [
-                        {
-                          "type": "mrkdwn",
-                          "text": "Project: DWX"
                         }
                       ]
                     }
