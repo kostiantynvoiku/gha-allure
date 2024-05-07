@@ -88,6 +88,13 @@ jobs:
                       }
                     },
                     {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "✔️ Passed: ${{ steps.allure.outputs.test_result_passed }} | ✖️ Failed: ${{ steps.allure.outputs.test_result_failed }} | 👁️‍🗨️ Total: ${{ steps.allure.outputs.test_result_total }}"
+                      }
+                    },
+                    {
                       "type": "context",
                       "elements": [
                         {
@@ -95,13 +102,6 @@ jobs:
                           "text": "Project: DWX"
                         }
                       ]
-                    },
-                    {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "✔️ Passed: ${{ steps.allure.outputs.test_result_passed }} | ✖️ Failed: ${{ steps.allure.outputs.test_result_failed }} | 👁️‍🗨️ Total: ${{ steps.allure.outputs.test_result_total }}"
-                      }
                     },
                     {
                       "type": "actions",
