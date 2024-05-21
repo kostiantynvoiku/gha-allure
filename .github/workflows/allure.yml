@@ -1,45 +1,123 @@
 name: Run tests and publish report
-on: [pull_request]
+on: [workflow_dispatch]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
+      contents: write
     steps:
-        - name: Checkout gh-pages
-          uses: actions/checkout@v3
-          if: always()
-          continue-on-error: true
-          with:
-            ref: gh-pages # branch name
-            path: gh-pages-dir # checkout path
-      
-        - name: Allure Report Action
-          uses: mgrybyk/allure-report-branch-action@v1
-          if: always()
-          continue-on-error: true
-          id: allure # used in comment to PR
-          with:
-            report_id: 'self-test'
-            gh_pages: 'gh-pages-dir'
-            report_dir: 'allure-results'
-      
-        - name: Git Commit and Push Action
-          uses: mgrybyk/git-commit-pull-push-action@v1
-          if: always()
-          with:
-            repository: gh-pages-dir
-            branch: gh-pages
-            pull_args: --rebase -X ours
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      # - name: Cypress run Component
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     component: true
+
+      - name: Cypress run E2E
+        uses: cypress-io/github-action@v6
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages # branch name
+          path: gh-pages # checkout path
+  
+      - name: Allure Report Action
+        uses: mgrybyk/allure-report-branch-action@v1
+        if: always()
+        continue-on-error: true
+        id: allure # used in comment to PR
+        with:
+          report_id: 'e2e'
+          gh_pages: 'gh-pages'
+          report_dir: 'allure-results'
+    
+      - name: Git Commit and Push Action
+        uses: mgrybyk/git-commit-pull-push-action@v1
+        if: always()
+        with:
+          repository: gh-pages
+          branch: gh-pages
+          pull_args: --rebase -X ours
 
             # After publishing to gh-pages
-        - name: Comment PR with Allure Report link
-          if: ${{ always() && github.event_name == 'pull_request' && steps.allure.outputs.report_url }}
-          continue-on-error: true
-          uses: thollander/actions-comment-pull-request@v2
-          with:
-            message: |
-              ${{ steps.allure.outputs.test_result_icon }} [Allure Report](${{ steps.allure.outputs.report_url }}) | [History](${{ steps.allure.outputs.report_history_url }})
-            comment_tag: allure_report
-            mode: recreate
+      - name: Comment PR with Allure Report link
+        if: ${{ always() && github.event_name == 'pull_request' && steps.allure.outputs.report_url }}
+        continue-on-error: true
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            ${{ steps.allure.outputs.test_result_icon }} [Allure Report](${{ steps.allure.outputs.report_url }}) | [History](${{ steps.allure.outputs.report_history_url }})
+          comment_tag: allure_report
+          mode: recreate
+
+      - name: 📦 DEFINE VARS FOR SLACK
+        if: always() 
+        run: |
+          if [[ "${{ steps.allure.outputs.test_result }}" == "FAIL" ]]; then 
+            echo "SLACK_COLOR=f71414" >> $GITHUB_ENV
+          else 
+            echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
+          fi
+
+      - name: 📩 POST MESSAGE TO SLACK
+        if: always()
+        uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+        with:
+          channel-id: 'C072KH2MPBJ'
+          payload: |
+            {
+              "attachments": [
+                {
+                  "color": "${{ env.SLACK_COLOR }}",
+                  "blocks": [
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "🤖 Run *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|#${{ github.run_number }}>* finished on `${{ env.BRANCH_NAME }}` branch with the status: ${{ steps.allure.outputs.test_result_icon }} *${{ steps.allure.outputs.test_result }}*"
+                      }
+                    },
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "✔️ Passed: ${{ steps.allure.outputs.test_result_passed }} | ✖️ Failed: ${{ steps.allure.outputs.test_result_failed }} | 👁️‍🗨️ Total: ${{ steps.allure.outputs.test_result_total }}"
+                      }
+                    },
+                    {
+                      "type": "context",
+                      "elements": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "📂 Project: DWX"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "actions",
+                      "elements": [
+                        {
+                          "type": "button",
+                          "text": {
+                            "type": "plain_text",
+                            "text": "ALLURE REPORT"
+                          },
+                          "url": "${{ steps.allure.outputs.report_url }}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            

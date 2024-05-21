@@ -1,0 +1,35 @@
+{
+  "name": "gha-allure",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cypress.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "combine-reports": "mochawesome-merge cypress/reports/e2e/*.json > cypress/reports/e2e/report.json",
+    "generate-report": "marge cypress/reports/e2e/report.json -f report -o cypress/reports/e2e --inline",
+    "posttest": "yarn run combine-reports && yarn run generate-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cypress/react": "^8.0.0",
+    "allure-commandline": "^2.29.0",
+    "allure-cypress": "^2.15.1",
+    "cypress": "^13.8.1",
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "cypress-multi-reporters": "^1.6.4",
+    "marge": "^1.0.1",
+    "mochawesome-merge": "^4.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-scripts": "^5.0.1",
+    "webpack": "^5.91.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
