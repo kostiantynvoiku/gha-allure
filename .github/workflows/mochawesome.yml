@@ -38,6 +38,8 @@ jobs:
           destination_dir: cypress/build/${{ github.run_number }}
 
       - run: echo ${{ steps.testSummary.outputs }}
+        if: always()
+
 
 
 
