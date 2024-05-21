@@ -1,5 +1,5 @@
 name: Run tests and publish report
-on: [pull_request]
+on: [pull_request, workflow_dispatch]
 
 jobs:
   test:
