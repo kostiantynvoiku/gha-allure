@@ -25,7 +25,7 @@ jobs:
       - name: Create test summary
         uses: test-summary/action@dist
         with:
-          paths: /**/*.xml
+          paths: cypress/reports/junit/*.xml
         if: always()
 
       - name: Deploy to GitHub Pages
