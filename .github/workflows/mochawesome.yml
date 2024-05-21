@@ -19,6 +19,7 @@ jobs:
 
       - name: Cypress run E2E
         uses: cypress-io/github-action@v6
+        id: cypress
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -29,7 +30,7 @@ jobs:
 
         # After publishing to gh-pages
       - run: echo $GITHUB_STEP_SUMMARY
-      - run: echo $GITHUB_JOB_SUMMARY
+      - run: echo "The value is ${{steps.cypress.outputs.GITHUB_STEP_SUMMARY}}"
 
 
           
