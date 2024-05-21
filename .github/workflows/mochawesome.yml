@@ -21,6 +21,13 @@ jobs:
         uses: cypress-io/github-action@v6
         id: cypress
 
+                # After publishing to gh-pages
+      - name: Create test summary
+        uses: test-summary/action@dist
+        with:
+          paths: ./cypress/reports/**/*.xml
+        if: always()
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: always()
@@ -29,12 +36,7 @@ jobs:
           publish_dir: ./cypress/reports
           destination_dir: cypress/build/${{ github.run_number }}
 
-        # After publishing to gh-pages
-      - name: Create test summary
-        uses: test-summary/action@dist
-        with:
-          paths: ./cypress/reports/e2e/*.xml
-        if: always()
+
 
 
           
