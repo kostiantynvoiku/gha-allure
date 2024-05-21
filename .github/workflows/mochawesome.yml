@@ -38,7 +38,7 @@ jobs:
           destination_dir: cypress/build/${{ github.run_number }}
 
       - name: Comment PR with Allure Report link
-        if: ${{ always() && github.event_name == 'pull_request' && steps.allure.outputs.total }}
+        if: ${{ always() && github.event_name == 'pull_request' && steps.testSummary.outputs.total }}
         continue-on-error: true
         uses: thollander/actions-comment-pull-request@v2
         with:
