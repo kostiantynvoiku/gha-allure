@@ -2,9 +2,19 @@ const { defineConfig } = require("cypress");
 const { allureCypress } = require("allure-cypress/reporter");
 
 module.exports = defineConfig({
+  experimentalInteractiveRunEvents: true,
+  "reporter": "cypress-mochawesome-reporter",
+  "reporterOptions": {
+    "reportDir": "cypress/reports",
+    "overwrite": false,
+    "html": true,
+    "json": true
+  },
+
   e2e: {
     setupNodeEvents(on, config) {
-			allureCypress(on);
+      require('cypress-mochawesome-reporter/plugin')(on);
+      allureCypress(on);
       return config;
     },
   },
