@@ -37,10 +37,12 @@ jobs:
           publish_dir: ./cypress/reports
           destination_dir: cypress/build/${{ github.run_number }}
 
-      - run: echo ${{ steps.testSummary.outputs }}
-        if: always()
-
-
-
-
-          
+      - name: Comment PR with Allure Report link
+        if: ${{ always() && github.event_name == 'pull_request' && steps.allure.outputs.total }}
+        continue-on-error: true
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            ${{ steps.testSummary.outputs.passed }} / ${{ steps.testSummary.outputs.total }} tests passed
+          comment_tag: allure_report
+          mode: recreate
