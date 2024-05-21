@@ -32,7 +32,7 @@ jobs:
         # After publishing to gh-pages
       - run: echo $GITHUB_STEP_SUMMARY
         if: always()
-      - run: echo "The value is ${{steps.cypress.outputs.GITHUB_STEP_SUMMARY}}"
+      - run: echo "The value is ${{env.GITHUB_STEP_SUMMARY}}"
         if: always()
 
 
