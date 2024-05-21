@@ -30,9 +30,10 @@ jobs:
           destination_dir: cypress/build/${{ github.run_number }}
 
         # After publishing to gh-pages
-      - run: echo $GITHUB_STEP_SUMMARY
-        if: always()
-      - run: echo "The value is ${{env.GITHUB_STEP_SUMMARY}}"
+      - name: Create test summary
+        uses: test-summary/action@dist
+        with:
+          paths: ./cypress/reports/e2e/*.xml
         if: always()
 
 
