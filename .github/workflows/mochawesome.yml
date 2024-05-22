@@ -58,6 +58,7 @@ jobs:
 
       - name: Publish Report
         uses: turing85/publish-report@v2
+        if: always()
         with:
           checkout: 'true'
           comment-header: my-comment-header
