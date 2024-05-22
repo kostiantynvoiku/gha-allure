@@ -54,6 +54,5 @@ jobs:
         if: always()
         with:
           files: |
-            cypress/reports/**/*.json
             cypress/reports/**/*.xml
 
