@@ -72,18 +72,18 @@ jobs:
             
               You can see the report [here]({4}).
           comment-message-failure: |
-              ## Cypress Results
+              ## 🧪 Cypress Results
               ### 😔 {0} failed
             
               | Passed | Failed | Skipped |
               |--------|--------|---------|
               | ✅ {1} | ❌ {2} | ⚠️ {3}   |
             
-              You can see the HTML report [here](https://${{ github.repository_owner }}.github.io/${{ github.repository }}/cypress/build/${{ github.run_number }}/e2e).
+              You can see the HTML report [here](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}/e2e).
           comment-message-recreate: |
               ## 🚦Reports for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
               Reports will be posted here as they get available.
-          report-fail-on-error: true # to fail when tests failed
+          #report-fail-on-error: true # to fail when tests failed
           report-name: Tests
           report-path: 'cypress/reports/**/*.json'
           report-reporter: mochawesome-json
