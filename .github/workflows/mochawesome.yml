@@ -56,3 +56,11 @@ jobs:
           files: |
             cypress/reports/**/*.xml
 
+      - name: Publish Report
+        uses: turing85/publish-report@v2
+        with:
+          checkout: 'true'
+          comment-header: my-comment-header
+          comment-message-recreate: Hello
+          recreate-comment: true
+
