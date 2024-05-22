@@ -37,12 +37,19 @@ jobs:
           publish_dir: ./cypress/reports
           destination_dir: cypress/build/${{ github.run_number }}
 
-      - name: Comment PR with Allure Report link
-        if: ${{ always() && github.event_name == 'pull_request' && steps.testSummary.outputs.total }}
-        continue-on-error: true
-        uses: thollander/actions-comment-pull-request@v2
+      # - name: Comment PR with Allure Report link
+      #   if: ${{ always() && github.event_name == 'pull_request' && steps.testSummary.outputs.total }}
+      #   continue-on-error: true
+      #   uses: thollander/actions-comment-pull-request@v2
+      #   with:
+      #     message: |
+      #       ${{ steps.testSummary.outputs.passed }} / ${{ steps.testSummary.outputs.total }} tests passed
+      #     comment_tag: allure_report
+      #     mode: recreate
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2.16.1
+        if: always()
         with:
-          message: |
-            ${{ steps.testSummary.outputs.passed }} / ${{ steps.testSummary.outputs.total }} tests passed
-          comment_tag: allure_report
-          mode: recreate
+          files: |
+            cypress/reports/**/*.json
