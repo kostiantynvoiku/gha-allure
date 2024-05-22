@@ -64,18 +64,29 @@ jobs:
           # checkout: 'true' # not needed; project is already checked out 
           comment-header: my-comment-header
           comment-message-success: |
-            YAY! {0} passed!  
+            <details>
+              <summary><h3>🥳 {0} passed</h3></summary>
             
-            {1} tests were successful, {2} tests failed, {3} test were skipped.
+              | Passed | Failed | Skipped |
+              |--------|--------|---------|
+              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
             
-            The report can be found [here]({4}).
+              You can see the report [here]({4}).
+            </details>
 
           comment-message-failure: |
-            On no! {0} failed!  
-
-            {1} tests were successful, {2} tests failed, {3} test were skipped.
-
-            The report can be found [here]({4}).
+            <details>
+              <summary><h3>😔 {0} failed</h3></summary>
+            
+              | Passed | Failed | Skipped |
+              |--------|--------|---------|
+              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
+            
+              You can see the report [here]({4}).
+            </details>
+          comment-message-recreate: |
+              ## 🚦Reports for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
+              Reports will be posted here as they get available.
           report-fail-on-error: true # to fail when tests failed
           report-name: Tests
           report-path: 'cypress/reports/**/*.json'
