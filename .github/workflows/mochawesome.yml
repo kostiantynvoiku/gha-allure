@@ -37,7 +37,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./cypress/reports
-          destination_dir: cypress/build/${{ github.run_number }}
+          destination_dir: cypress/build/${{ github.run_number }}/e2e
 
       # - name: Comment PR with Allure Report link
       #   if: ${{ always() && github.event_name == 'pull_request' && steps.testSummary.outputs.total }}
@@ -72,13 +72,14 @@ jobs:
             
               You can see the report [here]({4}).
           comment-message-failure: |
-              <summary><h3>😔 {0} failed</h3></summary>
+              ## Cypress Results
+              ### 😔 {0} failed
             
               | Passed | Failed | Skipped |
               |--------|--------|---------|
               | ✅ {1} | ❌ {2} | ⚠️ {3}   |
             
-              You can see the report [here]({4}).
+              You can see the HTML report [here](https://${{ github.repository_owner }}.github.io/${{ github.repository }}/cypress/build/${{ github.run_number }}/e2e).
           comment-message-recreate: |
               ## 🚦Reports for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
               Reports will be posted here as they get available.
