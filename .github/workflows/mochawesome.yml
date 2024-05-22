@@ -49,12 +49,12 @@ jobs:
       #     comment_tag: allure_report
       #     mode: recreate
 
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2.16.1
-        if: always()
-        with:
-          files: |
-            cypress/reports/**/*.xml
+      # - name: Publish Test Results
+      #   uses: EnricoMi/publish-unit-test-result-action@v2.16.1
+      #   if: always()
+      #   with:
+      #     files: |
+      #       cypress/reports/**/*.xml
 
       - name: Publish Report
         uses: turing85/publish-report@v2
@@ -64,7 +64,6 @@ jobs:
           # checkout: 'true' # not needed; project is already checked out 
           comment-header: my-comment-header
           comment-message-success: |
-            <details>
               <summary><h3>🥳 {0} passed</h3></summary>
             
               | Passed | Failed | Skipped |
@@ -72,10 +71,7 @@ jobs:
               | ✅ {1} | ❌ {2} | ⚠️ {3}   |
             
               You can see the report [here]({4}).
-            </details>
-
           comment-message-failure: |
-            <details>
               <summary><h3>😔 {0} failed</h3></summary>
             
               | Passed | Failed | Skipped |
@@ -83,7 +79,6 @@ jobs:
               | ✅ {1} | ❌ {2} | ⚠️ {3}   |
             
               You can see the report [here]({4}).
-            </details>
           comment-message-recreate: |
               ## 🚦Reports for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
               Reports will be posted here as they get available.
