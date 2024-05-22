@@ -24,12 +24,12 @@ jobs:
         id: cypress
 
         # After publishing to gh-pages
-      - name: Create test summary
-        uses: test-summary/action@dist
-        with:
-          paths: cypress/reports/junit/*.xml
-        if: always()
-        id: testSummary
+      # - name: Create test summary
+      #   uses: test-summary/action@dist
+      #   with:
+      #     paths: cypress/reports/junit/*.xml
+      #   if: always()
+      #   id: testSummary
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -37,7 +37,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./cypress/reports
-          destination_dir: cypress/build/${{ github.run_number }}/e2e
+          destination_dir: cypress/build/${{ github.run_number }}
 
       # - name: Comment PR with Allure Report link
       #   if: ${{ always() && github.event_name == 'pull_request' && steps.testSummary.outputs.total }}
