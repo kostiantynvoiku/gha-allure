@@ -4,18 +4,36 @@ const { allureCypress } = require("allure-cypress/reporter");
 module.exports = defineConfig({
   // experimentalInteractiveRunEvents: true,
   video: true,
-  reporter: 'cypress-mochawesome-reporter',
+  reporter: "cypress-multi-reporters",
   reporterOptions: {
-    charts: true,
-    reportPageTitle: 'custom-title',
-    embeddedScreenshots: true,
-    inlineAssets: true,
-    saveAllAttempts: false,
-    reportDir: "cypress/reports/e2e",
-    overwrite: false,
-    saveJson: true,
-    videoOnFailOnly: true
+    reporterEnabled: "cypress-mochawesome-reporter, mocha-junit-reporter",
+    cypressMochawesomeReporterReporterOptions: {
+      charts: true,
+      reportPageTitle: 'custom-title',
+      embeddedScreenshots: true,
+      inlineAssets: true,
+      saveAllAttempts: false,
+      reportDir: "cypress/reports/e2e",
+      overwrite: false,
+      saveJson: true,
+      videoOnFailOnly: true
+    },
+    mochaJunitReporterReporterOptions: {
+      mochaFile: "cypress/reports/junit/results-[hash].xml"
+    }
   },
+  // reporter: 'cypress-mochawesome-reporter',
+  // reporterOptions: {
+  //   charts: true,
+  //   reportPageTitle: 'custom-title',
+  //   embeddedScreenshots: true,
+  //   inlineAssets: true,
+  //   saveAllAttempts: false,
+  //   reportDir: "cypress/reports/e2e",
+  //   overwrite: false,
+  //   saveJson: true,
+  //   videoOnFailOnly: true
+  // },
 
   e2e: {
     experimentalRunAllSpecs: true,
