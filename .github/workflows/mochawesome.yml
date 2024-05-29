@@ -30,6 +30,9 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
 
+      - name: List directory contents
+        run: ls -la
+
       - name: Generate Mochawesome Report
         if: success() || failure()
         run: yarn run test:merge-reports
