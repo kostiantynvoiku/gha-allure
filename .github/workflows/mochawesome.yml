@@ -31,12 +31,13 @@ jobs:
           SPLIT_INDEX: ${{ strategy.job-index }}
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4.0.0 
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./cypress/reports
           destination_dir: cypress/build/${{ github.run_number }}
+          force_orphan: true
 
       - name: Publish Report
         uses: turing85/publish-report@v2
