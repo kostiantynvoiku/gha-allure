@@ -23,14 +23,6 @@ jobs:
         uses: cypress-io/github-action@v6
         id: cypress
 
-        # After publishing to gh-pages
-      # - name: Create test summary
-      #   uses: test-summary/action@dist
-      #   with:
-      #     paths: cypress/reports/junit/*.xml
-      #   if: always()
-      #   id: testSummary
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: always()
@@ -38,23 +30,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./cypress/reports
           destination_dir: cypress/build/${{ github.run_number }}
-
-      # - name: Comment PR with Allure Report link
-      #   if: ${{ always() && github.event_name == 'pull_request' && steps.testSummary.outputs.total }}
-      #   continue-on-error: true
-      #   uses: thollander/actions-comment-pull-request@v2
-      #   with:
-      #     message: |
-      #       ${{ steps.testSummary.outputs.passed }} / ${{ steps.testSummary.outputs.total }} tests passed
-      #     comment_tag: allure_report
-      #     mode: recreate
-
-      # - name: Publish Test Results
-      #   uses: EnricoMi/publish-unit-test-result-action@v2.16.1
-      #   if: always()
-      #   with:
-      #     files: |
-      #       cypress/reports/**/*.xml
 
       - name: Publish Report
         uses: turing85/publish-report@v2
@@ -64,16 +39,17 @@ jobs:
           # checkout: 'true' # not needed; project is already checked out 
           comment-header: my-comment-header
           comment-message-success: |
-              <summary><h3>🥳 {0} passed</h3></summary>
+              ## 🧪 Cypress Results
+              #### 🥳 {0} passed in the run [${{ github.run_id }}]({4}
             
               | Passed | Failed | Skipped |
               |--------|--------|---------|
               | ✅ {1} | ❌ {2} | ⚠️ {3}   |
             
-              You can see the report [here]({4}).
+              You can see the HTML report [here](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}/e2e).
           comment-message-failure: |
               ## 🧪 Cypress Results
-              ### 😔 {0} failed
+              ### 😔 {0} failed in the run [${{ github.run_id }}]({4}
             
               | Passed | Failed | Skipped |
               |--------|--------|---------|
