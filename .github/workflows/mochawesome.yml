@@ -30,8 +30,18 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
 
-      - name: List directory contents
-        run: ls -la
+  post-test:
+    needs: [test]
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      checks: write
+      contents: write
+      issues: read 
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Generate Mochawesome Report
         if: success() || failure()
