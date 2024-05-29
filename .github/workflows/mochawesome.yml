@@ -83,7 +83,7 @@ jobs:
           comment-message-recreate: |
               ## 🚦Reports for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
               Reports will be posted here as they get available.
-          report-fail-on-error: false # to fail when tests failed
+          report-fail-on-error: true # to fail when tests failed
           report-name: Tests
           report-path: 'cypress/reports/**/*.json'
           report-reporter: mochawesome-json
