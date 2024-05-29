@@ -9,6 +9,10 @@ jobs:
       checks: write
       contents: write
       issues: read
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,6 +26,9 @@ jobs:
       - name: Cypress run E2E
         uses: cypress-io/github-action@v6
         id: cypress
+        env:
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

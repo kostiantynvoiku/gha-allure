@@ -1,5 +1,6 @@
 const { defineConfig } = require("cypress");
 const { allureCypress } = require("allure-cypress/reporter");
+const cypressSplit = require('cypress-split')
 
 module.exports = defineConfig({
   // experimentalInteractiveRunEvents: true,
@@ -40,6 +41,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       require('cypress-mochawesome-reporter/plugin')(on);
       allureCypress(on);
+      cypressSplit(on, config)
       return config;
     },
   },
