@@ -40,7 +40,7 @@ jobs:
           comment-header: my-comment-header
           comment-message-success: |
               ## 🧪 Cypress Results
-              #### 🥳 {0} passed in the run [${{ github.run_id }}]({4}
+              #### 🥳 {0} passed in the run [#${{ github.run_id }}]({4})
             
               | Passed | Failed | Skipped |
               |--------|--------|---------|
@@ -49,7 +49,7 @@ jobs:
               You can see the HTML report [here](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}/e2e).
           comment-message-failure: |
               ## 🧪 Cypress Results
-              ### 😔 {0} failed in the run [${{ github.run_id }}]({4}
+              ### 😔 {0} failed in the run [#${{ github.run_id }}]({4})
             
               | Passed | Failed | Skipped |
               |--------|--------|---------|
