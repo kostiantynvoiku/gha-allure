@@ -30,12 +30,16 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
 
+      - name: Generate Mochawesome Report
+        if: success() || failure()
+        run: yarn run test:merge-reports
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4.0.0 
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./cypress/reports
+          publish_dir: ./cypress/reports/e2e/merged
           destination_dir: cypress/build/${{ github.run_number }}
           force_orphan: true
 
@@ -69,6 +73,6 @@ jobs:
               Reports will be posted here as they get available.
           report-fail-on-error: true # to fail when tests failed
           report-name: Tests
-          report-path: 'cypress/reports/**/*.json'
+          report-path: 'cypress/reports/e2e/mergedReport.json'
           report-reporter: mochawesome-json
 

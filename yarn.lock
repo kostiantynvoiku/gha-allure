@@ -7629,7 +7629,7 @@ mocha-junit-reporter@^2.2.1:
     strip-ansi "^6.0.1"
     xml "^1.0.1"
 
-mochawesome-merge@^4.2.1:
+mochawesome-merge@^4.2.1, mochawesome-merge@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/mochawesome-merge/-/mochawesome-merge-4.3.0.tgz#7cc5d5730c7d8d1b034c8d8fecf3cd36e0010297"
   integrity sha512-1roR6g+VUlfdaRmL8dCiVpKiaUhbPVm1ZQYUM6zHX46mWk+tpsKVZR6ba98k2zc8nlPvYd71yn5gyH970pKBSw==
