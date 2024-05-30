@@ -95,13 +95,14 @@ jobs:
           SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
           SLACK_TITLE: "Cypress Test Results"
           SLACK_MESSAGE: >
-            The Cypress tests have completed. Here are the results:
-            | Passed | Failed | Skipped |
-            |--------|--------|---------|
-            | ✅ ${{ steps.report.outputs.tests-passed }} | ❌ ${{ steps.report.outputs.tests-failed }} | ⚠️ ${{ steps.report.outputs.tests-skipped }}  |
+            The Cypress tests have completed. Here are the results:\n
+            | Passed | Failed | Skipped |\n
+            |--------|--------|---------|\n
+            | ✅ ${{ steps.report.outputs.tests-passed }} | ❌ ${{ steps.report.outputs.tests-failed }} | ⚠️ ${{ steps.report.outputs.tests-skipped }}  |\n
 
-            You can see the detailed report <(${{ env.REPORT_URL }}|here> 
+            You can see the detailed report <${{ env.REPORT_URL }}|here> 
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_FOOTER:
 
 env: 
   REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
