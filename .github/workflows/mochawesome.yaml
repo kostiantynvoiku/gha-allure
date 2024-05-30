@@ -1,0 +1,68 @@
+name: Run tests and publish report
+on: [pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: write
+      issues: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install npm dependencies, cache them correctly
+      # and run all Cypress tests
+      # - name: Cypress run Component
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     component: true
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run end-to-end tests
+        run: npm run test:e2e
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./cypress/reports/html
+          destination_dir: cypress/build/${{ github.run_number }}
+
+      - name: Publish Report
+        uses: turing85/publish-report@v2
+        if: ${{ always() }}
+        with:
+          comment-header: my-comment-header
+          comment-message-success: |
+              <summary><h3>🥳 {0} passed</h3></summary>
+            
+              | Passed | Failed | Skipped |
+              |--------|--------|---------|
+              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
+            
+              You can see the report [here]({4}).
+          comment-message-failure: |
+              ## 🧪 Cypress Results
+              ### 😔 {0} failed
+            
+              | Passed | Failed | Skipped |
+              |--------|--------|---------|
+              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
+            
+              You can see the HTML report [here](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}/e2e).
+          comment-message-recreate: |
+              ## 🚦Reports for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
+              Reports will be posted here as they get available.
+          #report-fail-on-error: true # to fail when tests failed
+          report-name: Tests
+          report-path: 'cypress/reports/**/*.json'
+          report-reporter: mochawesome-json
