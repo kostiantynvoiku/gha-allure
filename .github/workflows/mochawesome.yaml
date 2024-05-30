@@ -46,6 +46,7 @@ jobs:
       - name: Publish Report
         uses: turing85/publish-report@v2.0.1
         if: ${{ always() }}
+        id: report
         env: 
           REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
         with:
@@ -92,7 +93,8 @@ jobs:
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: 'C072KH2MPBJ'
+          MSG_MINIMAL: true
           SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
           SLACK_TITLE: "Cypress Test Results"
-          SLACK_MESSAGE: "The Cypress tests have completed. Here are the results:\n- Passed: ${{ steps.cypress.outputs.passed }}\n- Failed: ${{ steps.cypress.outputs.failed }}\n- Skipped: ${{ steps.cypress.outputs.skipped }}"
+          SLACK_MESSAGE: "The Cypress tests have completed. Here are the results:\n- Passed: ${{ steps.report.outputs.tests-passed }}\n- Failed: ${{ steps.report.outputs.tests-failed }}\n- Skipped: ${{ steps.report.outputs.tests-skipped }}"
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
