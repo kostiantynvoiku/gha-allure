@@ -27,17 +27,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Publish Report
-        uses: turing85/publish-report@v2
-        with:
-          recreate-comment: true
-          comment-message-recreate: |
-            ## 🚦 Cypress Report for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
-            Report will be posted here as they get available.
-
       - name: Run end-to-end tests
+        id: cypress
         run: yarn run cy:run:parallel
-        continue-on-error: true
 
       - name: Generate Mochawesome Report
         if: always()
@@ -52,8 +44,10 @@ jobs:
           destination_dir: cypress/build/${{ github.run_number }}
 
       - name: Publish Report
-        uses: turing85/publish-report@v2
+        uses: turing85/publish-report@v2.0.1
         if: ${{ always() }}
+        env: 
+          REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
         with:
           report-fail-on-error: true # to fail when tests failed
           report-name: Tests
@@ -61,21 +55,44 @@ jobs:
           report-reporter: mochawesome-json
           comment-header: my-comment-header
           comment-message-success: |
-              <summary><h3>🥳 {0} passed</h3></summary>
-            
+              ## 🧪 Cypress Results
+              ### 🥳  {0} failed
               | Passed | Failed | Skipped |
               |--------|--------|---------|
               | ✅ {1} | ❌ {2} | ⚠️ {3}   |
-            
-              You can see the report [here]({4}).
+              You can see the HTML report [here](${{ env.REPORT_URL }}).
           comment-message-failure: |
               ## 🧪 Cypress Results
               ### 😔 {0} failed
-            
               | Passed | Failed | Skipped |
               |--------|--------|---------|
               | ✅ {1} | ❌ {2} | ⚠️ {3}   |
-            
-              You can see the HTML report [here](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}).
+              You can see the HTML report [here](${{ env.REPORT_URL }}).
 
-              
+      # - name: 📦 DEFINE VARS FOR SLACK
+      #   if: always()
+      #   run: |
+      #     if [ "${{ steps.e2e.outcome }}" == "failure" ]; then 
+      #       echo "SLACK_COLOR=f71414" >> $GITHUB_ENV
+      #     else 
+      #       echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
+      #     fi
+      
+      # - name: Set Slack message color
+      #   id: set-color
+      #   run: |
+      #     if [ "${{ job.status }}" == "success" ]; then
+      #       echo "color=good" >> $GITHUB_ENV
+      #     else
+      #       echo "color=danger" >> $GITHUB_ENV
+      #     fi
+      
+      - name: Post results to Slack
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: 'C072KH2MPBJ'
+          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+          SLACK_TITLE: "Cypress Test Results"
+          SLACK_MESSAGE: "The Cypress tests have completed. Here are the results:\n- Passed: ${{ steps.cypress.outputs.passed }}\n- Failed: ${{ steps.cypress.outputs.failed }}\n- Skipped: ${{ steps.cypress.outputs.skipped }}"
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
