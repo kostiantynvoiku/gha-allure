@@ -72,4 +72,4 @@ jobs:
           report-name: Tests
           report-path: 'cypress/reports/html/index.json'
           report-reporter: mochawesome-json
-          recreate-comment: true
+          #recreate-comment: true
