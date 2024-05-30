@@ -25,10 +25,10 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Run end-to-end tests
-        run: npm run test:e2e
+        run: yarn run test:e2e
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
