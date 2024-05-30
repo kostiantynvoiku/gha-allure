@@ -5,9 +5,9 @@
     "passes": 2,
     "pending": 0,
     "failures": 1,
-    "start": "2024-05-30T13:42:31.864Z",
-    "end": "2024-05-30T13:42:38.992Z",
-    "duration": 7128,
+    "start": "2024-05-30T13:47:54.274Z",
+    "end": "2024-05-30T13:48:01.719Z",
+    "duration": 7445,
     "testsRegistered": 3,
     "passPercent": 66.66666666666666,
     "pendingPercent": 0,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "c0df62ce-4f48-41cd-8872-6f8263e993ef",
+      "uuid": "9f13a29e-6a93-4b4f-a781-7291cff642b3",
       "title": "",
       "fullFile": "cypress/e2e/spec.cy.js",
       "file": "cypress/e2e/spec.cy.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "9332e90d-738c-4ab1-8bb0-988124f5deaf",
+          "uuid": "33ba55d7-acb5-49d5-bbdd-244f4c8f8c86",
           "title": "template spec",
           "fullFile": "",
           "file": "",
@@ -38,7 +38,7 @@
               "title": "passes",
               "fullTitle": "template spec passes",
               "timedOut": null,
-              "duration": 418,
+              "duration": 444,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -47,26 +47,26 @@
               "context": "{\n  \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n  \"value\": \"cypress/e2e/spec.cy.js\"\n}",
               "code": "cy.visit('https://example.cypress.io');\ncy.get('#utilities').should('exist');",
               "err": {},
-              "uuid": "b5fb364d-e1bd-4ce3-9398-af78089f0b2c",
-              "parentUUID": "9332e90d-738c-4ab1-8bb0-988124f5deaf",
+              "uuid": "96dc22b8-9ecd-4769-a852-8cb38a43e402",
+              "parentUUID": "33ba55d7-acb5-49d5-bbdd-244f4c8f8c86",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "b5fb364d-e1bd-4ce3-9398-af78089f0b2c"
+            "96dc22b8-9ecd-4769-a852-8cb38a43e402"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 418,
+          "duration": 444,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "4993743b-4e44-41ae-8c15-eff876b56ea4",
+          "uuid": "78824817-4a18-43c3-9100-c1a35ba9789f",
           "title": "template spec",
           "fullFile": "",
           "file": "",
@@ -77,7 +77,7 @@
               "title": "passes",
               "fullTitle": "template spec passes",
               "timedOut": null,
-              "duration": 142,
+              "duration": 197,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -86,26 +86,26 @@
               "context": "{\n  \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n  \"value\": \"cypress/e2e/spec.cy.js\"\n}",
               "code": "cy.visit('https://example.cypress.io');\ncy.get('#utilities').should('exist');",
               "err": {},
-              "uuid": "55fe9990-d343-4d12-b70f-36cde1997bc6",
-              "parentUUID": "4993743b-4e44-41ae-8c15-eff876b56ea4",
+              "uuid": "0f77108f-030c-4612-bd9b-ce273fece4ec",
+              "parentUUID": "78824817-4a18-43c3-9100-c1a35ba9789f",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "55fe9990-d343-4d12-b70f-36cde1997bc6"
+            "0f77108f-030c-4612-bd9b-ce273fece4ec"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 142,
+          "duration": 197,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "6c7b2bc0-3f21-458f-9ca0-cdad2ae3b7be",
+          "uuid": "85ce066e-1d27-43ee-b56b-920a04c8a5fc",
           "title": "template spec",
           "fullFile": "",
           "file": "",
@@ -116,7 +116,7 @@
               "title": "passes",
               "fullTitle": "template spec passes",
               "timedOut": null,
-              "duration": 4321,
+              "duration": 4447,
               "state": "failed",
               "speed": null,
               "pass": false,
@@ -129,8 +129,8 @@
                 "estack": "AssertionError: Timed out retrying after 4000ms: Expected <div#utilities.col-xs-12> not to exist in the DOM, but it was continuously found.\n    at Context.eval (webpack://cy-reporters/./cypress/e2e/spec.cy.js:19:25)",
                 "diff": null
               },
-              "uuid": "69a998a2-3529-41c6-b440-ec101b7483d6",
-              "parentUUID": "6c7b2bc0-3f21-458f-9ca0-cdad2ae3b7be",
+              "uuid": "8e0798b2-2e7b-4476-9df1-274e967e98f5",
+              "parentUUID": "85ce066e-1d27-43ee-b56b-920a04c8a5fc",
               "isHook": false,
               "skipped": false
             }
@@ -138,11 +138,11 @@
           "suites": [],
           "passes": [],
           "failures": [
-            "69a998a2-3529-41c6-b440-ec101b7483d6"
+            "8e0798b2-2e7b-4476-9df1-274e967e98f5"
           ],
           "pending": [],
           "skipped": [],
-          "duration": 4321,
+          "duration": 4447,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
