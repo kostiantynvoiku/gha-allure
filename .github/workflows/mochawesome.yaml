@@ -94,7 +94,13 @@ jobs:
           MSG_MINIMAL: true
           SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
           SLACK_TITLE: "Cypress Test Results"
-          SLACK_MESSAGE: "The Cypress tests have completed. Here are the results:\n✅ Passed: ${{ steps.report.outputs.tests-passed }}\n❌ Failed: ${{ steps.report.outputs.tests-failed }}\n⚠️ Skipped: ${{ steps.report.outputs.tests-skipped }}\nYou can see the detailed report [here](${{ env.REPORT_URL }})."
+          SLACK_MESSAGE: >
+            The Cypress tests have completed. Here are the results:
+            |                       Passed                |                       Failed               |                    Skipped                   |
+            |---------------------------------------------|--------------------------------------------|----------------------------------------------|
+            | ✅ ${{ steps.report.outputs.tests-passed }} | ❌ ${{ steps.report.outputs.tests-failed }} | ⚠️ ${{ steps.report.outputs.tests-skipped }}  |
+
+            You can see the detailed report [here](${{ env.REPORT_URL }}).
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 env: 
