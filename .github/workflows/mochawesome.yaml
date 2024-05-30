@@ -81,9 +81,9 @@ jobs:
         id: set-color
         run: |
           if [ "${{ job.status }}" == "success" ]; then
-            echo "color=good" >> $GITHUB_ENV
+            echo "color=f71414" >> $GITHUB_ENV
           else
-            echo "color=danger" >> $GITHUB_ENV
+            echo "color=28a745" >> $GITHUB_ENV
           fi
  
       - name: 📩 POST MESSAGE TO SLACK
@@ -104,7 +104,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "🤖 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* finished on with the status: *${{ job.status }}*"
+                        "text": "🧪 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* finished on with the status: *${{ job.status }}*"
                       }
                     },
                     {
@@ -119,7 +119,7 @@ jobs:
                       "elements": [
                         {
                           "type": "mrkdwn",
-                          "text": "📂 Project: qpay-customer-ui"
+                          "text": "📂 Project: ${{ github.event.repository.name }}"
                         }
                       ]
                     },
