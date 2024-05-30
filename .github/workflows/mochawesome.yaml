@@ -32,8 +32,8 @@ jobs:
         with:
           recreate-comment: true
           comment-message-recreate: |
-            ## 🚦Reports for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
-            Reports will be posted here as they get available.
+            ## 🚦 Cypress Report for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
+            Report will be posted here as they get available.
 
       - name: Run end-to-end tests
         run: yarn run cy:run:parallel
