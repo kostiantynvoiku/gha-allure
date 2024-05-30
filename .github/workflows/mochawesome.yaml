@@ -89,7 +89,7 @@ jobs:
             {
               "attachments": [
                 {
-                  "color": "${{ env.color }}",
+                  "color": "${{ env.SLACK_COLOR }}",
                   "blocks": [
                     {
                       "type": "section",
