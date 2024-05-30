@@ -95,4 +95,4 @@ jobs:
           SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
           SLACK_TITLE: "Cypress Test Results"
           SLACK_MESSAGE: "The Cypress tests have completed. Here are the results:\n- Passed: ${{ steps.cypress.outputs.passed }}\n- Failed: ${{ steps.cypress.outputs.failed }}\n- Skipped: ${{ steps.cypress.outputs.skipped }}"
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
