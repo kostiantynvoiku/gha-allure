@@ -5,7 +5,7 @@
   "main": "cypress.config.js",
   "scripts": {
     "cy:run": "cypress run --e2e",
-    "cy:run:parallel": "cypress-parallel -s cy:run -t 2 -d 'cypress/e2e/**/*.cy.js' -r 'cypress-mochawesome-reporter' -o 'cypressParallel=true,videoOnFailOnly=true,charts=true,embeddedScreenshots=true,inlineAssets=true,saveJson=true’'",
+    "cy:run:parallel": "cypress-parallel -s cy:run -t 2 -d 'cypress/e2e/**/*.cy.js' -r 'cypress-mochawesome-reporter' -o 'cypressParallel=true,videoOnFailOnly=true,charts=true,embeddedScreenshots=true,inlineAssets=true,saveJson=true'",
     "clean:reports": "rimraf cypress/reports",
     "clean:runner": "rimraf runner-results multi-reporter-config.json cypress/.tmp",
     "generate-report": "generate-mochawesome-report --set-exit-code",
