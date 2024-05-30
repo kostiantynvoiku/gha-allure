@@ -28,7 +28,11 @@ jobs:
         run: yarn install
 
       - name: Run end-to-end tests
-        run: yarn run test:e2e
+        run: yarn run cy:run:parallel
+
+      - name: Generate Mochawesome Report
+        if: always()
+        run: yarn run generate-mochawesome-report
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
