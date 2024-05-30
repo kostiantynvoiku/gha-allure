@@ -96,11 +96,11 @@ jobs:
           SLACK_TITLE: "Cypress Test Results"
           SLACK_MESSAGE: >
             The Cypress tests have completed. Here are the results:
-            |                       Passed                |                       Failed               |                    Skipped                   |
-            |---------------------------------------------|--------------------------------------------|----------------------------------------------|
+            | Passed | Failed | Skipped |
+            |--------|--------|---------|
             | ✅ ${{ steps.report.outputs.tests-passed }} | ❌ ${{ steps.report.outputs.tests-failed }} | ⚠️ ${{ steps.report.outputs.tests-skipped }}  |
 
-            You can see the detailed report [here](${{ env.REPORT_URL }}).
+            You can see the detailed report <(${{ env.REPORT_URL }}|here> 
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 env: 
