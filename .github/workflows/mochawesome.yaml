@@ -64,5 +64,5 @@ jobs:
               Reports will be posted here as they get available.
           #report-fail-on-error: true # to fail when tests failed
           report-name: Tests
-          report-path: 'cypress/reports/**/*.json'
+          report-path: 'cypress/reports/html/index.json'
           report-reporter: mochawesome-json
