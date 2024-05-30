@@ -77,28 +77,69 @@ jobs:
       #       echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
       #     fi
       
-      # - name: Set Slack message color
-      #   id: set-color
-      #   run: |
-      #     if [ "${{ job.status }}" == "success" ]; then
-      #       echo "color=good" >> $GITHUB_ENV
-      #     else
-      #       echo "color=danger" >> $GITHUB_ENV
-      #     fi
-      
-      - name: Post results to Slack
+      - name: Set Slack message color
+        id: set-color
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "color=good" >> $GITHUB_ENV
+          else
+            echo "color=danger" >> $GITHUB_ENV
+          fi
+ 
+      - name: 📩 POST MESSAGE TO SLACK
         if: always()
-        uses: rtCamp/action-slack-notify@v2
+        uses: slackapi/slack-github-action@v1.26.0
         env:
-          SLACK_CHANNEL: 'C072KH2MPBJ'
-          MSG_MINIMAL: true
-          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
-          SLACK_TITLE: "🧪 Cypress Test Results"
-          SLACK_MESSAGE: "Run *<${{ env.RUN_URL }}|#${{ github.run_number }}> finished with the status: *${{job.status}}* \n✔️ Passed: ${{ steps.report.outputs.tests-passed }} | ✖️ Failed: ${{ steps.report.outputs.tests-failed }} | 👁️‍🗨️ Skipped: ${{ steps.report.outputs.tests-skipped }}\n 🔗 Link to the detailed report: <${{ env.REPORT_URL }}|mochawesome-report>."
-          SLACK_MESSAGE_ON_FAILURE: "FAILED ❌"
-          SLACK_FOOTER:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+        with:
+          channel-id: 'C072KH2MPBJ'
+          payload: |
+            {
+              "attachments": [
+                {
+                  "color": "${{ env.color }}",
+                  "blocks": [
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "🤖 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* finished on with the status: *${{ job.status }}*"
+                      }
+                    },
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "✔️ Passed: ${{ steps.report.outputs.tests-passed }} | ✖️ Failed: ${{ steps.report.outputs.tests-failed }} | 👁️‍🗨️ Skipped: ${{ steps.report.outputs.tests-skipped }}"
+                      }
+                    },
+                    {
+                      "type": "context",
+                      "elements": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "📂 Project: qpay-customer-ui"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "actions",
+                      "elements": [
+                        {
+                          "type": "button",
+                          "text": {
+                            "type": "plain_text",
+                            "text": "MOCHAWESOME REPORT"
+                          },
+                          "url": "${{ env.REPORT_URL }}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
 env: 
   REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
   RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
