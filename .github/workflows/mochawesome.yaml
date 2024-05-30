@@ -68,22 +68,13 @@ jobs:
               | ✅ {1} | ❌ {2} | ⚠️ {3}   |
               You can see the HTML report [here](${{ env.REPORT_URL }}).
 
-      # - name: 📦 DEFINE VARS FOR SLACK
-      #   if: always()
-      #   run: |
-      #     if [ "${{ steps.e2e.outcome }}" == "failure" ]; then 
-      #       echo "SLACK_COLOR=f71414" >> $GITHUB_ENV
-      #     else 
-      #       echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
-      #     fi
-      
-      - name: Set Slack message color
-        id: set-color
+      - name: 📦 DEFINE VARS FOR SLACK
+        if: always()
         run: |
-          if [ "${{ job.status }}" == "success" ]; then
-            echo "color=f71414" >> $GITHUB_ENV
-          else
-            echo "color=28a745" >> $GITHUB_ENV
+          if [ "${{ job.status }}" == "failure" ]; then 
+            echo "SLACK_COLOR=f71414" >> $GITHUB_ENV
+          else 
+            echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
           fi
  
       - name: 📩 POST MESSAGE TO SLACK
@@ -104,7 +95,7 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "🧪 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* has finished on ${{ github.event.repository.name }} with the status: *${{ job.status }}*"
+                        "text": "🧪 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* has finished on `${{ github.event.repository.name }}` with the status: *${{ job.status }}*"
                       }
                     },
                     {
