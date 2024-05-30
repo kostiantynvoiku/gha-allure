@@ -93,10 +93,12 @@ jobs:
           SLACK_CHANNEL: 'C072KH2MPBJ'
           MSG_MINIMAL: true
           SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
-          SLACK_TITLE: "🧪 Cypress Test Results <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|#${{ github.run_number }}>"
-          SLACK_MESSAGE: "The Cypress tests have completed. Here are the results:\n✔️ Passed: ${{ steps.report.outputs.tests-passed }} | ✖️ Failed: ${{ steps.report.outputs.tests-failed }} | 👁️‍🗨️ Skipped: ${{ steps.report.outputs.tests-skipped }}\n 🔗 Link to the detailed report: <${{ env.REPORT_URL }}|mochawesome-report>."
-          SLACK_MESSAGE_ON_FAILURE: FAILED ❌
+          SLACK_TITLE: "🧪 Cypress Test Results"
+          SLACK_MESSAGE: "Run *<${{ env.RUN_URL }}|#${{ github.run_number }}> finished with the status: *${{job.status}}* \n✔️ Passed: ${{ steps.report.outputs.tests-passed }} | ✖️ Failed: ${{ steps.report.outputs.tests-failed }} | 👁️‍🗨️ Skipped: ${{ steps.report.outputs.tests-skipped }}\n 🔗 Link to the detailed report: <${{ env.REPORT_URL }}|mochawesome-report>."
+          SLACK_MESSAGE_ON_FAILURE: "FAILED ❌"
+          SLACK_FOOTER:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
 env: 
   REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
+  RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
