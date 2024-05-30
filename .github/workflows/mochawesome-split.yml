@@ -1,5 +1,5 @@
-name: Run tests and publish report
-on: [pull_request, workflow_dispatch]
+name: Run split tests and publish mochawesome report
+on: [workflow_dispatch]
 
 jobs:
   test:
@@ -9,6 +9,10 @@ jobs:
       checks: write
       contents: write
       issues: read
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,39 +26,37 @@ jobs:
       - name: Cypress run E2E
         uses: cypress-io/github-action@v6
         id: cypress
+        env:
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
 
-        # After publishing to gh-pages
-      # - name: Create test summary
-      #   uses: test-summary/action@dist
-      #   with:
-      #     paths: cypress/reports/junit/*.xml
-      #   if: always()
-      #   id: testSummary
+  post-test:
+    needs: [test]
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      checks: write
+      contents: write
+      issues: read 
+      
+    if: always()
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate Mochawesome Report
+        if: success() || failure()
+        run: yarn run test:merge-reports
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4.0.0 
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./cypress/reports
+          publish_dir: ./cypress/reports/e2e/merged
           destination_dir: cypress/build/${{ github.run_number }}
-
-      # - name: Comment PR with Allure Report link
-      #   if: ${{ always() && github.event_name == 'pull_request' && steps.testSummary.outputs.total }}
-      #   continue-on-error: true
-      #   uses: thollander/actions-comment-pull-request@v2
-      #   with:
-      #     message: |
-      #       ${{ steps.testSummary.outputs.passed }} / ${{ steps.testSummary.outputs.total }} tests passed
-      #     comment_tag: allure_report
-      #     mode: recreate
-
-      # - name: Publish Test Results
-      #   uses: EnricoMi/publish-unit-test-result-action@v2.16.1
-      #   if: always()
-      #   with:
-      #     files: |
-      #       cypress/reports/**/*.xml
+          force_orphan: true
 
       - name: Publish Report
         uses: turing85/publish-report@v2
@@ -62,18 +64,20 @@ jobs:
         with:
           # cancel-workflow-on-error: 'false' # If we do not want to cancel the whole workflow execution on error
           # checkout: 'true' # not needed; project is already checked out 
+          recreate-comment: true
           comment-header: my-comment-header
           comment-message-success: |
-              <summary><h3>🥳 {0} passed</h3></summary>
+              ## 🧪 Cypress Results
+              #### 🥳 {0} passed in the run [#${{ github.run_id }}]({4})
             
               | Passed | Failed | Skipped |
               |--------|--------|---------|
               | ✅ {1} | ❌ {2} | ⚠️ {3}   |
             
-              You can see the report [here]({4}).
+              You can see the HTML report [here](https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}/e2e).
           comment-message-failure: |
               ## 🧪 Cypress Results
-              ### 😔 {0} failed
+              ### 😔 {0} failed in the run [#${{ github.run_id }}]({4})
             
               | Passed | Failed | Skipped |
               |--------|--------|---------|
@@ -83,8 +87,8 @@ jobs:
           comment-message-recreate: |
               ## 🚦Reports for run [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})🚦
               Reports will be posted here as they get available.
-          #report-fail-on-error: true # to fail when tests failed
+          report-fail-on-error: true # to fail when tests failed
           report-name: Tests
-          report-path: 'cypress/reports/**/*.json'
+          report-path: 'cypress/reports/e2e/mergedReport.json'
           report-reporter: mochawesome-json
 

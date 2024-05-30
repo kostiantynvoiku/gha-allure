@@ -4,7 +4,12 @@
   "description": "",
   "main": "cypress.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cy:run": "cypress run --e2e",
+    "cy:run:parallel": "cypress-parallel -s cy:run -t 2 -d 'cypress/e2e/**/*.cy.js' -r 'cypress-mochawesome-reporter' -o 'cypressParallel=true,videoOnFailOnly=true,charts=true,embeddedScreenshots=true,inlineAssets=true,saveJson=true'",
+    "clean:reports": "rimraf cypress/reports",
+    "clean:runner": "rimraf runner-results multi-reporter-config.json cypress/.tmp",
+    "generate-report": "generate-mochawesome-report --set-exit-code",
+    "test:e2e": "yarn run clean:reports && yarn run cy:run:parallel; yarn run generate-report; yarn run clean:runner"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +21,8 @@
     "cypress": "^13.8.1",
     "cypress-mochawesome-reporter": "^3.8.2",
     "cypress-multi-reporters": "^1.6.4",
-    "mocha-junit-reporter": "^2.2.1",
+    "cypress-parallel": "^0.14.0",
+    "cypress-split": "^1.23.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "^5.0.1",
@@ -27,5 +33,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "dependencies": {
+    "mochawesome-merge": "^4.3.0"
+  }
 }
