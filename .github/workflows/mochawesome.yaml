@@ -104,24 +104,15 @@ jobs:
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "🧪 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* finished on with the status: *${{ job.status }}*"
+                        "text": "🧪 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* has finished on ${{ github.event.repository.name }} with the status: *${{ job.status }}*"
                       }
                     },
                     {
                       "type": "section",
                       "text": {
                         "type": "mrkdwn",
-                        "text": "✔️ Passed: ${{ steps.report.outputs.tests-passed }} | ✖️ Failed: ${{ steps.report.outputs.tests-failed }} | 👁️‍🗨️ Skipped: ${{ steps.report.outputs.tests-skipped }}"
+                        "text": "🟢 Passed: ${{ steps.report.outputs.tests-passed }} | 🔴 Failed: ${{ steps.report.outputs.tests-failed }} | 🔵 Skipped: ${{ steps.report.outputs.tests-skipped }}"
                       }
-                    },
-                    {
-                      "type": "context",
-                      "elements": [
-                        {
-                          "type": "mrkdwn",
-                          "text": "📂 Project: ${{ github.event.repository.name }}"
-                        }
-                      ]
                     },
                     {
                       "type": "actions",
