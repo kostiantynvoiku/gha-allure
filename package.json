@@ -9,7 +9,7 @@
     "clean:reports": "rimraf cypress/reports",
     "clean:runner": "rimraf runner-results multi-reporter-config.json cypress/.tmp",
     "generate-report": "generate-mochawesome-report --set-exit-code",
-    "test:e2e": "yarn run clean:reports && yarn run cy:run:parallel || true && yarn run generate-report; yarn run clean:runner"
+    "test:e2e": "yarn run clean:reports && yarn run cy:run:parallel; yarn run generate-report; yarn run clean:runner"
   },
   "keywords": [],
   "author": "",
