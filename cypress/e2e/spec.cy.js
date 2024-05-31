@@ -1,8 +1,8 @@
 describe('template spec', () => {
   it('passes', () => {
-    console.log('USER: ', Cypress.env('USER'))
-    console.log('PASSWORD: ', Cypress.env('PASSWORD'))
-    console.log('STRIPE_KEY: ', Cypress.env('stripeKey'))
+    expect(Cypress.env('user')).to.eq('kostiantyn.voiku@qodeup.com')
+    expect(Cypress.env('password')).to.eq('123qwe123QWE')
+    expect(Cypress.env('stripeKey')).to.eq('pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3')
     cy.visit('https://example.cypress.io')
     cy.get('#utilities').should('exist')
   })
