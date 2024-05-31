@@ -28,7 +28,6 @@ jobs:
         run: yarn install
 
       - name: Run end-to-end tests
-        id: cypress
         env: 
           CYPRESS_USER: 'kostiantyn.voiku@qodeup.com'
           CYPRESS_PASSWORD: '123qwe123QWE'
