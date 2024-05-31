@@ -49,28 +49,29 @@ jobs:
         id: report
         with:
           report-fail-on-error: true # to fail when tests failed
-          report-name: Tests
+          comment-enabled: false
+          # report-name: Tests
           report-path: 'cypress/reports/html/index.json'
           report-reporter: mochawesome-json
-          comment-header: my-comment-header
-          comment-message-success: |
-              ## 🧪 Cypress Results
-              ### 🥳  {0} failed
+          # comment-header: my-comment-header
+          # comment-message-success: |
+          #     ## 🧪 Cypress Results
+          #     ### 🥳  {0} failed
               
-              | Passed | Failed | Skipped |
-              |--------|--------|---------|
-              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
+          #     | Passed | Failed | Skipped |
+          #     |--------|--------|---------|
+          #     | ✅ {1} | ❌ {2} | ⚠️ {3}   |
 
-              You can see the HTML report [here](${{ env.REPORT_URL }}).
-          comment-message-failure: |
-              ## 🧪 Cypress Results
-              ### 😔 {0} failed
+          #     You can see the HTML report [here](${{ env.REPORT_URL }}).
+          # comment-message-failure: |
+          #     ## 🧪 Cypress Results
+          #     ### 😔 {0} failed
 
-              | Passed | Failed | Skipped |
-              |--------|--------|---------|
-              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
+          #     | Passed | Failed | Skipped |
+          #     |--------|--------|---------|
+          #     | ✅ {1} | ❌ {2} | ⚠️ {3}   |
 
-              You can see the HTML report [here](${{ env.REPORT_URL }}).
+          #     You can see the HTML report [here](${{ env.REPORT_URL }}).
 
       - name: 📦 DEFINE VARS FOR SLACK
         if: always()
