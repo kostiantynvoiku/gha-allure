@@ -5,9 +5,9 @@
     "passes": 3,
     "pending": 0,
     "failures": 0,
-    "start": "2024-05-30T10:49:43.727Z",
-    "end": "2024-05-30T10:49:45.880Z",
-    "duration": 2153,
+    "start": "2024-05-31T18:50:31.105Z",
+    "end": "2024-05-31T18:50:33.221Z",
+    "duration": 2116,
     "testsRegistered": 3,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "5c222627-ce47-4188-9ca7-bf019b74c2f6",
+      "uuid": "20b62723-96ee-4aaf-8b78-22a100701c49",
       "title": "",
       "fullFile": "cypress/e2e/spec2.cy.js",
       "file": "cypress/e2e/spec2.cy.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "49db2399-eb10-4277-8c46-a6e02b62ef34",
+          "uuid": "332d3ac5-c69b-4f0a-97ff-415f0a56d4ef",
           "title": "template spec",
           "fullFile": "",
           "file": "",
@@ -38,7 +38,7 @@
               "title": "passes",
               "fullTitle": "template spec passes",
               "timedOut": null,
-              "duration": 199,
+              "duration": 331,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -47,26 +47,26 @@
               "context": "{\n  \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n  \"value\": \"cypress/e2e/spec2.cy.js\"\n}",
               "code": "cy.visit('https://example.cypress.io');\ncy.get('#utilities').should('exist');",
               "err": {},
-              "uuid": "d185bc38-349b-42d3-a94e-197f16a1d6e0",
-              "parentUUID": "49db2399-eb10-4277-8c46-a6e02b62ef34",
+              "uuid": "25acfc9d-b513-4d68-bd7e-e6d63e28e86c",
+              "parentUUID": "332d3ac5-c69b-4f0a-97ff-415f0a56d4ef",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "d185bc38-349b-42d3-a94e-197f16a1d6e0"
+            "25acfc9d-b513-4d68-bd7e-e6d63e28e86c"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 199,
+          "duration": 331,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "e4961992-3b89-4e0c-b893-dbf7515325f5",
+          "uuid": "06da56e5-cc66-41a8-ab3f-1043dd1574d7",
           "title": "template spec",
           "fullFile": "",
           "file": "",
@@ -77,7 +77,7 @@
               "title": "passes",
               "fullTitle": "template spec passes",
               "timedOut": null,
-              "duration": 94,
+              "duration": 111,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -86,26 +86,26 @@
               "context": "{\n  \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n  \"value\": \"cypress/e2e/spec2.cy.js\"\n}",
               "code": "cy.visit('https://example.cypress.io');\ncy.get('#utilities').should('exist');",
               "err": {},
-              "uuid": "23f695d6-9ef1-4b0d-b711-996a85808744",
-              "parentUUID": "e4961992-3b89-4e0c-b893-dbf7515325f5",
+              "uuid": "38fadcff-b955-4a2f-b064-d4f009beaf4c",
+              "parentUUID": "06da56e5-cc66-41a8-ab3f-1043dd1574d7",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "23f695d6-9ef1-4b0d-b711-996a85808744"
+            "38fadcff-b955-4a2f-b064-d4f009beaf4c"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 94,
+          "duration": 111,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "c9dce771-ce16-4cf5-8e80-af2bce67eb18",
+          "uuid": "29dc1958-e839-4d01-ac1d-40aab5e61bde",
           "title": "template spec",
           "fullFile": "",
           "file": "",
@@ -116,7 +116,7 @@
               "title": "passes",
               "fullTitle": "template spec passes",
               "timedOut": null,
-              "duration": 80,
+              "duration": 107,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -125,20 +125,20 @@
               "context": "{\n  \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n  \"value\": \"cypress/e2e/spec2.cy.js\"\n}",
               "code": "cy.visit('https://example.cypress.io');\ncy.get('#utilities').should('exist');",
               "err": {},
-              "uuid": "0c3982bc-2e1f-4203-91f8-393d89894b20",
-              "parentUUID": "c9dce771-ce16-4cf5-8e80-af2bce67eb18",
+              "uuid": "5e795a73-f2e6-42da-b2c3-a6090163e61f",
+              "parentUUID": "29dc1958-e839-4d01-ac1d-40aab5e61bde",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "0c3982bc-2e1f-4203-91f8-393d89894b20"
+            "5e795a73-f2e6-42da-b2c3-a6090163e61f"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 80,
+          "duration": 107,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
