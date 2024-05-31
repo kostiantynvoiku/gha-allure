@@ -29,7 +29,7 @@ jobs:
 
       - name: Run end-to-end tests
         env: 
-          CYPESS_STRIPE_KEY: 'pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3'
+          CYPRESS_STRIPE_KEY: 'pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3'
         run: yarn run cy:run:parallel
 
       - name: Generate Mochawesome Report
