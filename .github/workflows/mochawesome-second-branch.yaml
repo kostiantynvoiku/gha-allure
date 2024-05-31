@@ -29,8 +29,6 @@ jobs:
 
       - name: Run end-to-end tests
         env: 
-          CYPRESS_USER: 'kostiantyn.voiku@qodeup.com'
-          CYPRESS_PASSWORD: '123qwe123QWE'
           CYPESS_STRIPE_KEY: 'pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3'
         run: yarn run cy:run:parallel
 
