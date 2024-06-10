@@ -9,7 +9,7 @@ jobs:
       marge: true
 
   publish-report:
-    needs: test
+    needs: [test]
     runs-on: ubuntu-latest
     permissions:
       checks: write
