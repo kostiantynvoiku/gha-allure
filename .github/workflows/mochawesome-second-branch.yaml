@@ -10,27 +10,15 @@ jobs:
       pull-requests: write
       issues: read
     steps:
-      - name: Checkout
+      - name: Checkout 🛎
         uses: actions/checkout@v4
-      # Install npm dependencies, cache them correctly
-      # and run all Cypress tests
-      # - name: Cypress run Component
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     component: true
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+    
+      - name: Custom tests 🧪
+        uses: cypress-io/github-action@v6
         with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Run end-to-end tests
+          command: yarn run cy:run:parallel
         env: 
           CYPRESS_STRIPE_KEY: 'pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3'
-        run: yarn run cy:run:parallel
 
       - name: Generate Mochawesome Report
         if: always()
