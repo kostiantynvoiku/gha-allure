@@ -3,6 +3,13 @@ on: [pull_request, workflow_dispatch]
 
 jobs:
   test:
+    uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v2
+    with:
+      nE2E: 3
+      marge: true
+      
+  publish-report:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       checks: write
@@ -12,22 +19,10 @@ jobs:
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v4
-        
-      - uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v2
-        with:
-          nE2E: 3
-          marge: true
-    
-      # - name: Custom tests 🧪
-      #   uses: cypress-io/github-action@v6
-      #   with:
-      #     command: yarn run cy:run:parallel
-      #   env: 
-      #     CYPRESS_STRIPE_KEY: 'pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3'
 
-      # - name: Generate Mochawesome Report
-      #   if: always()
-      #   run: yarn run generate-mochawesome-report
+      # Assuming the report generation and deployment steps remain the same,
+      # ensure they are updated to reflect any changes in outputs or paths
+      # resulting from the use of the reusable workflow.
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -40,32 +35,11 @@ jobs:
       - name: Publish Report
         uses: turing85/publish-report@v2.0.1
         if: ${{ always() }}
-        id: report
         with:
-          report-fail-on-error: true # to fail when tests failed
+          report-fail-on-error: true
           comment-enabled: false
-          # report-name: Tests
           report-path: 'cypress/reports/html/index.json'
           report-reporter: mochawesome-json
-          # comment-header: my-comment-header
-          # comment-message-success: |
-          #     ## 🧪 Cypress Results
-          #     ### 🥳  {0} failed
-              
-          #     | Passed | Failed | Skipped |
-          #     |--------|--------|---------|
-          #     | ✅ {1} | ❌ {2} | ⚠️ {3}   |
-
-          #     You can see the HTML report [here](${{ env.REPORT_URL }}).
-          # comment-message-failure: |
-          #     ## 🧪 Cypress Results
-          #     ### 😔 {0} failed
-
-          #     | Passed | Failed | Skipped |
-          #     |--------|--------|---------|
-          #     | ✅ {1} | ❌ {2} | ⚠️ {3}   |
-
-          #     You can see the HTML report [here](${{ env.REPORT_URL }}).
 
       - name: 📦 DEFINE VARS FOR SLACK
         if: always()
@@ -74,8 +48,7 @@ jobs:
             echo "SLACK_COLOR=f71414" >> $GITHUB_ENV
           else 
             echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
-          fi
- 
+
       - name: 📩 POST MESSAGE TO SLACK
         if: always()
         uses: slackapi/slack-github-action@v1.26.0
