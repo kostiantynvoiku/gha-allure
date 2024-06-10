@@ -7,7 +7,7 @@ jobs:
     with:
       nE2E: 3
       marge: true
-      
+
   publish-report:
     needs: test
     runs-on: ubuntu-latest
@@ -17,8 +17,8 @@ jobs:
       pull-requests: write
       issues: read
     steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@v4
+      # - name: Checkout 🛎
+      #   uses: actions/checkout@v4
 
       # Assuming the report generation and deployment steps remain the same,
       # ensure they are updated to reflect any changes in outputs or paths
@@ -29,7 +29,7 @@ jobs:
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./cypress/reports/html
+          publish_dir: ./mochawesome/results/index.html
           destination_dir: cypress/build/${{ github.run_number }}
 
       - name: Publish Report
@@ -38,7 +38,7 @@ jobs:
         with:
           report-fail-on-error: true
           comment-enabled: false
-          report-path: 'cypress/reports/html/index.json'
+          report-path: './mochawesome/results/merged.json'
           report-reporter: mochawesome-json
 
       - name: 📦 DEFINE VARS FOR SLACK
