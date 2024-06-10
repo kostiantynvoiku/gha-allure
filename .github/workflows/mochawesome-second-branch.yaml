@@ -12,17 +12,22 @@ jobs:
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v4
-    
-      - name: Custom tests 🧪
-        uses: cypress-io/github-action@v6
+        
+      - uses: bahmutov/cypress-workflows/.github/workflows/split.yml@v2
         with:
-          command: yarn run cy:run:parallel
-        env: 
-          CYPRESS_STRIPE_KEY: 'pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3'
+          nE2E: 3
+          marge: true
+    
+      # - name: Custom tests 🧪
+      #   uses: cypress-io/github-action@v6
+      #   with:
+      #     command: yarn run cy:run:parallel
+      #   env: 
+      #     CYPRESS_STRIPE_KEY: 'pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3'
 
-      - name: Generate Mochawesome Report
-        if: always()
-        run: yarn run generate-mochawesome-report
+      # - name: Generate Mochawesome Report
+      #   if: always()
+      #   run: yarn run generate-mochawesome-report
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
