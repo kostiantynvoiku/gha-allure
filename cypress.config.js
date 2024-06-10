@@ -12,7 +12,7 @@ module.exports = defineConfig({
     reportFilename: '[name].html',
     overwrite: true,
     html: true,
-    json: false,
+    json: true,
   },
   e2e: {
     experimentalRunAllSpecs: true,
