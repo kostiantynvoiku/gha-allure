@@ -9,6 +9,10 @@ jobs:
       contents: write
       pull-requests: write
       issues: read
+    strategy:
+        fail-fast: false
+        matrix:
+          containers: [1, 2, 3]
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v4
@@ -19,6 +23,8 @@ jobs:
           command: yarn run cy:run:parallel
         env: 
           CYPRESS_STRIPE_KEY: 'pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3'
+          SPLIT: ${{ strategy.job-total }}
+          SPLIT_INDEX: ${{ strategy.job-index }}
 
       - name: Generate Mochawesome Report
         if: always()
