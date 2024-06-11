@@ -20,7 +20,7 @@ jobs:
       - name: Custom tests 🧪
         uses: cypress-io/github-action@v6
         with:
-          command: yarn run cy:run:parallel
+          command: yarn run cy:run
         env: 
           CYPRESS_STRIPE_KEY: 'pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3'
           SPLIT: ${{ strategy.job-total }}
