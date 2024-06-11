@@ -26,13 +26,13 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
 
-      - run: ls -l cypress
+      - run: ls -l cypress/reports/
 
       - name: Upload Cypress Reports
         uses: actions/upload-artifact@v4
         with:
           name: cypress-reports-${{ matrix.containers }}
-          path: cypress/reports/
+          path: e/cypress/reports/html/
 
       # - name: Generate Mochawesome Report
       #   if: always()
@@ -51,7 +51,7 @@ jobs:
           path: cypress/reports/
 
       - name: Merge reports
-        run: ls -l cypress/reports/
+        run: npx mochawesome-merge ./cypress/reports/cypress-reports-*/*.json > mochawesome.json
 
 
       # - name: Deploy to GitHub Pages
