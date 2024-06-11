@@ -31,7 +31,7 @@ jobs:
       - name: Upload Cypress Reports
         uses: actions/upload-artifact@v4
         with:
-          name: cypress-reports
+          name: cypress-reports-${{ matrix.containers }}
           path: cypress/reports/
 
       # - name: Generate Mochawesome Report
