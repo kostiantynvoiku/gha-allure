@@ -26,6 +26,12 @@ jobs:
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
 
+      - name: Upload Cypress Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-reports
+          path: cypress/reports/
+
       # - name: Generate Mochawesome Report
       #   if: always()
       #   run: yarn run generate-mochawesome-report
@@ -34,6 +40,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v4
+      
+      - name: Download Cypress Reports
+        uses: actions/download-artifact@v3
+        with:
+          name: cypress-reports
+          path: cypress/reports/
+
       - name: Merge reports
         run: ls -l cypress/reports/
 
