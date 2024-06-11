@@ -1,12 +1,20 @@
 const { defineConfig } = require("cypress");
 const { allureCypress } = require("allure-cypress/reporter");
 const cypressSplit = require('cypress-split')
-const { beforeRunHook } = require('cypress-mochawesome-reporter/lib');
+//const { beforeRunHook } = require('cypress-mochawesome-reporter/lib');
 
 
 module.exports = defineConfig({
   // experimentalInteractiveRunEvents: true,
   reporter: 'cypress-mochawesome-reporter',
+  reporterOptions: {
+    charts: true,
+    reportPageTitle: 'custom-title',
+    embeddedScreenshots: true,
+    inlineAssets: true,
+    videoOnFailOnly: true,
+    saveJson: true,
+  },
   video: true,
   e2e: {
     experimentalRunAllSpecs: true,
