@@ -6,6 +6,7 @@ const { beforeRunHook } = require('cypress-mochawesome-reporter/lib');
 
 module.exports = defineConfig({
   // experimentalInteractiveRunEvents: true,
+  reporter: 'cypress-mochawesome-reporter',
   video: true,
   e2e: {
     experimentalRunAllSpecs: true,
