@@ -48,11 +48,10 @@ jobs:
       - name: Download Cypress Reports
         uses: actions/download-artifact@v4
         with:
-          name: cypress-reports
           path: cypress/reports/
 
       - name: Merge reports
-        run: ls -l cypress/reports/html/
+        run: ls -l cypress/reports/
 
 
       # - name: Deploy to GitHub Pages
