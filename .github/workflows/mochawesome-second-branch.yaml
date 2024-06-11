@@ -35,7 +35,7 @@ jobs:
     needs: test
     steps:
       - name: Merge reports
-        run: pwd
+        run: ls
 
       # - name: Deploy to GitHub Pages
       #   uses: peaceiris/actions-gh-pages@v3
