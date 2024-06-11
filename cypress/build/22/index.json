@@ -12,25 +12,25 @@
     "hasOther": false,
     "skipped": 0,
     "hasSkipped": false,
-    "start": "2024-06-11T06:41:27.703Z",
-    "end": "2024-06-11T06:41:29.998Z",
-    "duration": 2295
+    "start": "2024-06-11T06:41:35.414Z",
+    "end": "2024-06-11T06:41:37.786Z",
+    "duration": 2372
   },
   "results": [
     {
-      "uuid": "be280980-8794-4d3c-91cd-823e622d8fa3",
+      "uuid": "71e85f43-c291-48a0-b9c1-e6c61ffdb613",
       "title": "",
-      "fullFile": "cypress/e2e/spec.cy.js",
-      "file": "cypress/e2e/spec.cy.js",
+      "fullFile": "cypress/e2e/spec1.cy.js",
+      "file": "cypress/e2e/spec1.cy.js",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [],
       "suites": [
         {
-          "uuid": "b72124ff-742f-42c6-b61f-6dfa522113e9",
+          "uuid": "26008dea-684d-4179-87f6-773afcc1b654",
           "title": "template spec",
-          "fullFile": "cypress/e2e/spec.cy.js",
-          "file": "cypress/e2e/spec.cy.js",
+          "fullFile": "cypress/e2e/spec1.cy.js",
+          "file": "cypress/e2e/spec1.cy.js",
           "beforeHooks": [],
           "afterHooks": [],
           "tests": [
@@ -38,46 +38,7 @@
               "title": "passes",
               "fullTitle": "template spec passes",
               "timedOut": null,
-              "duration": 253,
-              "state": "passed",
-              "speed": "fast",
-              "pass": true,
-              "fail": false,
-              "pending": false,
-              "context": null,
-              "code": "expect(Cypress.env('STRIPE_KEY')).to.eq('pk_test_DJYoIp8py8PUFfgCySGnS3Nu00phlssDq3');\ncy.visit('https://example.cypress.io');\ncy.get('#utilities').should('exist');",
-              "err": {},
-              "uuid": "b3a4232a-e801-47bd-8a4a-c3e200487b95",
-              "parentUUID": "b72124ff-742f-42c6-b61f-6dfa522113e9",
-              "isHook": false,
-              "skipped": false
-            }
-          ],
-          "suites": [],
-          "passes": [
-            "b3a4232a-e801-47bd-8a4a-c3e200487b95"
-          ],
-          "failures": [],
-          "pending": [],
-          "skipped": [],
-          "duration": 253,
-          "root": false,
-          "rootEmpty": false,
-          "_timeout": 2000
-        },
-        {
-          "uuid": "deb8417b-c4ea-49d4-adec-7c383d9812f9",
-          "title": "template spec",
-          "fullFile": "cypress/e2e/spec.cy.js",
-          "file": "cypress/e2e/spec.cy.js",
-          "beforeHooks": [],
-          "afterHooks": [],
-          "tests": [
-            {
-              "title": "passes",
-              "fullTitle": "template spec passes",
-              "timedOut": null,
-              "duration": 95,
+              "duration": 267,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -86,29 +47,29 @@
               "context": null,
               "code": "cy.visit('https://example.cypress.io');\ncy.get('#utilities').should('exist');",
               "err": {},
-              "uuid": "26a62ff2-cb62-4fd7-8251-d31c4bf25bc5",
-              "parentUUID": "deb8417b-c4ea-49d4-adec-7c383d9812f9",
+              "uuid": "88004283-d8cc-4d1c-95b7-e439ea98c02f",
+              "parentUUID": "26008dea-684d-4179-87f6-773afcc1b654",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "26a62ff2-cb62-4fd7-8251-d31c4bf25bc5"
+            "88004283-d8cc-4d1c-95b7-e439ea98c02f"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 95,
+          "duration": 267,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
         },
         {
-          "uuid": "8a5a2ce5-c3b1-43d7-9a60-2778b1bc210c",
+          "uuid": "c6d9f8bb-0b51-490e-83ba-52f181ebb903",
           "title": "template spec",
-          "fullFile": "cypress/e2e/spec.cy.js",
-          "file": "cypress/e2e/spec.cy.js",
+          "fullFile": "cypress/e2e/spec1.cy.js",
+          "file": "cypress/e2e/spec1.cy.js",
           "beforeHooks": [],
           "afterHooks": [],
           "tests": [
@@ -116,7 +77,7 @@
               "title": "passes",
               "fullTitle": "template spec passes",
               "timedOut": null,
-              "duration": 85,
+              "duration": 98,
               "state": "passed",
               "speed": "fast",
               "pass": true,
@@ -125,20 +86,59 @@
               "context": null,
               "code": "cy.visit('https://example.cypress.io');\ncy.get('#utilities').should('exist');",
               "err": {},
-              "uuid": "c2823a0c-5351-492b-8daf-bc88302bd012",
-              "parentUUID": "8a5a2ce5-c3b1-43d7-9a60-2778b1bc210c",
+              "uuid": "747f4865-ef46-4195-94c3-9d322679d759",
+              "parentUUID": "c6d9f8bb-0b51-490e-83ba-52f181ebb903",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "c2823a0c-5351-492b-8daf-bc88302bd012"
+            "747f4865-ef46-4195-94c3-9d322679d759"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 85,
+          "duration": 98,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        },
+        {
+          "uuid": "e0c94f9b-55d3-4f77-9584-8d4b316e4213",
+          "title": "template spec",
+          "fullFile": "cypress/e2e/spec1.cy.js",
+          "file": "cypress/e2e/spec1.cy.js",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "passes",
+              "fullTitle": "template spec passes",
+              "timedOut": null,
+              "duration": 89,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('https://example.cypress.io');\ncy.get('#utilities').should('exist');",
+              "err": {},
+              "uuid": "d84f2a35-d5a4-42c0-bdd2-8fed068a959e",
+              "parentUUID": "e0c94f9b-55d3-4f77-9584-8d4b316e4213",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d84f2a35-d5a4-42c0-bdd2-8fed068a959e"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 89,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
