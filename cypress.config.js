@@ -6,20 +6,23 @@ const cypressSplit = require('cypress-split')
 
 module.exports = defineConfig({
   // experimentalInteractiveRunEvents: true,
-  reporter: 'cypress-mochawesome-reporter',
-  reporterOptions: {
-    charts: true,
-    reportPageTitle: 'custom-title',
-    embeddedScreenshots: true,
-    inlineAssets: true,
-    videoOnFailOnly: true,
-    saveJson: true,
+  "reporter": "cypress-multi-reporters",
+  "reporterOptions": {
+    "reporterEnabled": "mochawesome",
+    "mochawesomeReporterOptions": {
+      "reportDir": "cypress/reports/mocha",
+      "quite": true,
+      "overwrite": false,
+      "html": false,
+      "json": true
+    }
   },
   video: true,
+  screenshotsFolder: "cypress/reports/mochareports/assets",
   e2e: {
     experimentalRunAllSpecs: true,
     setupNodeEvents(on, config) {
-      require('cypress-mochawesome-reporter/plugin')(on);
+      //require('cypress-mochawesome-reporter/plugin')(on);
       // on('before:run', async (details) => {
       //   await beforeRunHook(details);
       // });
