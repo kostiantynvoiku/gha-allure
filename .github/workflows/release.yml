@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: "Prepare release"
         id: release 
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v3
         with:
           # this assumes that you have created a personal access token
           # (PAT) and configured it as a GitHub action secret named
@@ -28,7 +28,7 @@ jobs:
 
   test:
     name: E2E tests
-    if: ${{ needs.release.outputs.releases_created == 'false' }}
+    if: ${{ !needs.release.outputs.releases_created }}
     needs: release
     runs-on: ubuntu-latest
     steps:
