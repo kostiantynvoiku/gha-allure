@@ -48,3 +48,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo I am running!
+
+  final:
+    name: Final job
+    if: ${{ needs.release.outputs.releases_created }}
+    needs:
+      - release
+      - post-test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo I am running!
+    
