@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Cypress run E2E
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v6.7.1
 
   post-test:
     name: Post test job
