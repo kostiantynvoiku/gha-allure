@@ -10,13 +10,32 @@ permissions:
 name: release-please
 
 jobs:
-  release-please:
+  release:
+    name: Release
     runs-on: ubuntu-latest
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
     steps:
-      - uses: googleapis/release-please-action@v4
+      - name: "Prepare release"
+        id: release 
+        uses: googleapis/release-please-action@v4
         with:
           # this assumes that you have created a personal access token
           # (PAT) and configured it as a GitHub action secret named
           # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
           release-type: node
+
+  test:
+    name: E2E tests
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - run: "echo releases_created: ${{ needs.release.outputs.releases_created }}"
+      
+      - name: Checkout
+        if: ${{ needs.release.outputs.releases_created }}
+        uses: actions/checkout@v4
+      - name: Cypress run E2E
+        if: ${{ needs.release.outputs.releases_created }}
+        uses: cypress-io/github-action@v6
