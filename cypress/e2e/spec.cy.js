@@ -19,4 +19,3 @@ describe('template spec', () => {
     cy.get('#utilities').should('exist')
   })
 })
-
