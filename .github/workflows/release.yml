@@ -39,3 +39,12 @@ jobs:
 
       - name: Cypress run E2E
         uses: cypress-io/github-action@v6
+
+  post-test:
+    name: Post test job
+    needs:
+      - release
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo I'm running! 
