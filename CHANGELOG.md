@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/kostiantynvoiku/gha-allure/compare/v1.0.1...v1.0.2) (2024-07-15)
+
+
+### Bug Fixes
+
+* use v3 ([c0edc3d](https://github.com/kostiantynvoiku/gha-allure/commit/c0edc3dd489ff4459fcc679682f6995b4abd344e))
+
 ## [1.0.1](https://github.com/kostiantynvoiku/gha-allure/compare/v1.0.0...v1.0.1) (2024-07-15)
 
 
