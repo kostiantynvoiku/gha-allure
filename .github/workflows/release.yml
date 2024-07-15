@@ -48,4 +48,4 @@ jobs:
       - test
     runs-on: ubuntu-latest
     steps:
-      - run: echo I'm running! 
+      - run: echo I am running!
