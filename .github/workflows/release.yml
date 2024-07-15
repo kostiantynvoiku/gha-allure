@@ -34,8 +34,9 @@ jobs:
       - run: "echo releases_created: ${{ needs.release.outputs.releases_created }}"
       
       - name: Checkout
-        if: ${{ needs.release.outputs.releases_created }}
+        if: ${{ needs.release.outputs.releases_created == 'false' }}
         uses: actions/checkout@v4
+
       - name: Cypress run E2E
-        if: ${{ needs.release.outputs.releases_created }}
+        if: ${{ needs.release.outputs.releases_created == 'false' }}
         uses: cypress-io/github-action@v6
