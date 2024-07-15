@@ -1,5 +1,5 @@
 name: Second - Run tests and publish report
-on: [pull_request, workflow_dispatch]
+on: [workflow_dispatch]
 
 jobs:
   test:
