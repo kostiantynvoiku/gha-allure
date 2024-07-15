@@ -42,6 +42,7 @@ jobs:
 
   post-test:
     name: Post test job
+    if: ${{ needs.release.outputs.releases_created }}
     needs:
       - release
       - test
