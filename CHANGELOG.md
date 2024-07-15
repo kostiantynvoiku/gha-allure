@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/kostiantynvoiku/gha-allure/compare/v1.1.0...v1.2.0) (2024-07-15)
+
+
+### Features
+
+* add final job ([db77a63](https://github.com/kostiantynvoiku/gha-allure/commit/db77a6309f17f451de736ad392579825406a244b))
+
+
+### Bug Fixes
+
+* cy version ([ad4907e](https://github.com/kostiantynvoiku/gha-allure/commit/ad4907e3f57de5b6a46141be20867a4df16cb67e))
+
 ## [1.1.0](https://github.com/kostiantynvoiku/gha-allure/compare/v1.0.3...v1.1.0) (2024-07-15)
 
 
