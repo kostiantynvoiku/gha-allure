@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.3](https://github.com/kostiantynvoiku/gha-allure/compare/v1.0.2...v1.0.3) (2024-07-15)
+
+
+### Bug Fixes
+
+* post-test ([f02b991](https://github.com/kostiantynvoiku/gha-allure/commit/f02b9916cec89b9fe8d982b3030a92d6e71e8fd2))
+* quote ([988a555](https://github.com/kostiantynvoiku/gha-allure/commit/988a555c4ccc2dd45aaf33bc3011f8abd846a4ba))
+* run if release created ([bdf2d9e](https://github.com/kostiantynvoiku/gha-allure/commit/bdf2d9e258715b5ec7354ef5a916b4f867453d13))
+* update-browserslist-db@latest ([27b298e](https://github.com/kostiantynvoiku/gha-allure/commit/27b298e095391a0dedbea077499a35f44688ebae))
+
 ## [1.0.2](https://github.com/kostiantynvoiku/gha-allure/compare/v1.0.1...v1.0.2) (2024-07-15)
 
 
