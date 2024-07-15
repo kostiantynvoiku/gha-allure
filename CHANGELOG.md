@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/kostiantynvoiku/gha-allure/compare/v1.0.3...v1.1.0) (2024-07-15)
+
+
+### Features
+
+* trigger release ([1c3a4cd](https://github.com/kostiantynvoiku/gha-allure/commit/1c3a4cd71fd3d99f0df851dfcb433ced0bacee89))
+
+
+### Bug Fixes
+
+* unlink e2e and post-test ([897d5e4](https://github.com/kostiantynvoiku/gha-allure/commit/897d5e47a1b5fb1e2f8914cb40cfc7bd09c590a4))
+
 ## [1.0.3](https://github.com/kostiantynvoiku/gha-allure/compare/v1.0.2...v1.0.3) (2024-07-15)
 
 
