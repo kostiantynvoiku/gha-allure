@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: 35 13 * * *
-    - cron: 40 13 * * *
+    - cron: 45 13 * * *
+    - cron: 44 13 * * *
 
 concurrency:
   group: ${{ github.workflow }}
@@ -38,6 +38,8 @@ jobs:
     needs: vars
     steps:
       - run: echo "Running tests for ${{ needs.vars.outputs.package_name }}"
+      - run: echo "Running tests for ${{ github.event.schedule }}"
+
 
       - name: Checkout
         uses: actions/checkout@v4
