@@ -133,7 +133,7 @@ jobs:
             }
 
       - uses: slackapi/slack-github-action@v1.27.0
-        if: ${{ job.status == 'failure' }}
+        if: ${{ always() }}
         with:
           channel-id: 'C072KH2MPBJ'
           payload: |
