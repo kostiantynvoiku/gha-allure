@@ -1,11 +1,33 @@
 name: Run tests and publish report
-on: [workflow_dispatch]
+on: 
+  workflow_dispatch:
+
+  schedule:
+    - cron: 0 13 15 * *
+    - cron: 0 3 * * *
 
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false
 
 jobs:
+
+  vars:
+    name: "Set up run parameters"
+    runs-on: ubuntu-latest
+    steps:
+      - id: run-params
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "package_name=${{ github.event.inputs.package }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event.schedule }}" == "0 2 * * *" ]]; then
+            echo "package_name=qpay-ui" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event.schedule }}" == "0 3 * * *" ]]; then
+            echo "package_name=qpay-customer-ui" >> $GITHUB_OUTPUT
+          fi
+    outputs:
+      package_name: ${{ steps.run-params.outputs.package_name }}
+      
   test:
     runs-on: ubuntu-latest
     permissions:
@@ -13,7 +35,10 @@ jobs:
       contents: write
       pull-requests: write
       issues: read
+    needs: vars
     steps:
+      - run: echo "Running tests for ${{ needs.vars.outputs.package_name }}"
+
       - name: Checkout
         uses: actions/checkout@v4
       # Install npm dependencies, cache them correctly
