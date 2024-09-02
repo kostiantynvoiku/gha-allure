@@ -1,11 +1,33 @@
 name: Run tests and publish report
-on: [workflow_dispatch]
+on: 
+  workflow_dispatch:
+
+  schedule:
+    - cron: 0 13 20 * *
+    - cron: 0 13 25 * *
 
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false
 
 jobs:
+
+  vars:
+    name: "Set up run parameters"
+    runs-on: ubuntu-latest
+    steps:
+      - id: run-params
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "package_name=${{ github.event.inputs.package }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event.schedule }}" == "0 2 * * *" ]]; then
+            echo "package_name=qpay-ui" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event.schedule }}" == "0 3 * * *" ]]; then
+            echo "package_name=qpay-customer-ui" >> $GITHUB_OUTPUT
+          fi
+    outputs:
+      package_name: ${{ steps.run-params.outputs.package_name }}
+      
   test:
     runs-on: ubuntu-latest
     permissions:
@@ -13,7 +35,10 @@ jobs:
       contents: write
       pull-requests: write
       issues: read
+    needs: vars
     steps:
+      - run: echo "Running tests for ${{ needs.vars.outputs.package_name }}"
+
       - name: Checkout
         uses: actions/checkout@v4
       # Install npm dependencies, cache them correctly
@@ -23,17 +48,25 @@ jobs:
       #   with:
       #     component: true
 
-      - name: Set up Node.js
+      - name: "Setup pnpm packageManager"
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: "Setup NodeJS environment"
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "lts/*"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@qodeup"
+          cache: "pnpm"
 
-      - name: Install dependencies
-        run: yarn install
 
       - name: Run end-to-end tests
         id: cypress
-        run: yarn run cy:run:parallel
+        uses: cypress-io/github-action@v6
+        with:
+          command: yarn run cy:run:parallel
 
       - name: Generate Mochawesome Report
         if: always()
@@ -133,7 +166,7 @@ jobs:
             }
 
       - uses: slackapi/slack-github-action@v1.27.0
-        if: ${{ env.SLACK_COLOR == 'f71414' }}
+        if: ${{ always() }}
         with:
           channel-id: 'C072KH2MPBJ'
           payload: |
@@ -147,3 +180,4 @@ jobs:
 env: 
   REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
   RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
