@@ -87,6 +87,7 @@ jobs:
  
       - name: 📩 POST MESSAGE TO SLACK
         if: always()
+        id: slack-message
         uses: slackapi/slack-github-action@v1.26.0
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -130,6 +131,19 @@ jobs:
                 }
               ]
             }
+
+      - uses: slackapi/slack-github-action@v1.27.0
+        if: ${{ env.SLACK_COLOR == '28a745' }}
+        with:
+          channel-id: 'C072KH2MPBJ'
+          payload: |
+            {
+              "thread_ts": "${{ steps.slack-message.outputs.ts }}",
+              "text": "Deployment finished (Completed)"
+            }
+
+
+        
 env: 
   REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
   RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
