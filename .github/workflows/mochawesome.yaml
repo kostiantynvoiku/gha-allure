@@ -1,32 +1,28 @@
 name: Run tests and publish report
+
+env:
+  qpay-ui-int: 35 7 * * *
+  qpay-customer-ui-int: 40 7 * * *
 on: 
   workflow_dispatch:
+    inputs:
+      package:
+        description: "Package to test"
+        required: true
+        type: choice
+        options:
+          - qpay-customer-ui
+          - qpay-ui
 
   schedule:
-    - cron: 35 7 * * *
-    - cron: 40 7 * * *
+    - cron: 30 11 * * *
+    - cron: 35 11 * * *
 
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false
 
 jobs:
-
-  vars:
-    name: "Set up run parameters"
-    runs-on: ubuntu-latest
-    steps:
-      - id: run-params
-        run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "package_name=workflow_dispatch" >> $GITHUB_OUTPUT
-          elif [[ "${{ github.event.schedule }}" == "35 7 * * *" ]]; then
-            echo "package_name=qpay-ui" >> $GITHUB_OUTPUT
-          elif [[ "${{ github.event.schedule }}" == "40 7 * * *" ]]; then
-            echo "package_name=qpay-customer-ui" >> $GITHUB_OUTPUT
-          fi
-    outputs:
-      package_name: ${{ steps.run-params.outputs.package_name }}
       
   test:
     runs-on: ubuntu-latest
@@ -35,9 +31,8 @@ jobs:
       contents: write
       pull-requests: write
       issues: read
-    needs: vars
     steps:
-      - run: echo "Running tests for ${{ needs.vars.outputs.package_name }}"
+      - run: echo "Running tests for ${{ inputs.package || (github.event.schedule == '30 11 * * *' && 'qpay-ui') || (github.event.schedule == '35 11 * * *' && 'qpay-customer-ui') }}"
       - run: echo "Running tests for ${{ github.event.schedule }}"
 
 
@@ -70,116 +65,116 @@ jobs:
         with:
           command: yarn run cy:run:parallel
 
-      - name: Generate Mochawesome Report
-        if: always()
-        run: yarn run generate-mochawesome-report
+      # - name: Generate Mochawesome Report
+      #   if: always()
+      #   run: yarn run generate-mochawesome-report
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./cypress/reports/html
-          destination_dir: cypress/build/${{ github.run_number }}
+      # - name: Deploy to GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   if: always()
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./cypress/reports/html
+      #     destination_dir: cypress/build/${{ github.run_number }}
 
-      - name: Publish Report
-        uses: turing85/publish-report@v2.0.1
-        if: ${{ always() }}
-        id: report
-        with:
-          report-fail-on-error: true # to fail when tests failed
-          report-name: Tests
-          report-path: 'cypress/reports/html/index.json'
-          report-reporter: mochawesome-json
-          comment-header: my-comment-header
-          comment-message-success: |
-              ## 🧪 Cypress Results
-              ### 🥳  {0} failed
+      # - name: Publish Report
+      #   uses: turing85/publish-report@v2.0.1
+      #   if: ${{ always() }}
+      #   id: report
+      #   with:
+      #     report-fail-on-error: true # to fail when tests failed
+      #     report-name: Tests
+      #     report-path: 'cypress/reports/html/index.json'
+      #     report-reporter: mochawesome-json
+      #     comment-header: my-comment-header
+      #     comment-message-success: |
+      #         ## 🧪 Cypress Results
+      #         ### 🥳  {0} failed
               
-              | Passed | Failed | Skipped |
-              |--------|--------|---------|
-              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
+      #         | Passed | Failed | Skipped |
+      #         |--------|--------|---------|
+      #         | ✅ {1} | ❌ {2} | ⚠️ {3}   |
 
-              You can see the HTML report [here](${{ env.REPORT_URL }}).
-          comment-message-failure: |
-              ## 🧪 Cypress Results
-              ### 😔 {0} failed
+      #         You can see the HTML report [here](${{ env.REPORT_URL }}).
+      #     comment-message-failure: |
+      #         ## 🧪 Cypress Results
+      #         ### 😔 {0} failed
 
-              | Passed | Failed | Skipped |
-              |--------|--------|---------|
-              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
+      #         | Passed | Failed | Skipped |
+      #         |--------|--------|---------|
+      #         | ✅ {1} | ❌ {2} | ⚠️ {3}   |
 
-              You can see the HTML report [here](${{ env.REPORT_URL }}).
+      #         You can see the HTML report [here](${{ env.REPORT_URL }}).
 
-      - name: 📦 DEFINE VARS FOR SLACK
-        if: always()
-        run: |
-          if [ "${{ job.status }}" == "failure" ]; then 
-            echo "SLACK_COLOR=f71414" >> $GITHUB_ENV
-          else 
-            echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
-          fi
+      # - name: 📦 DEFINE VARS FOR SLACK
+      #   if: always()
+      #   run: |
+      #     if [ "${{ job.status }}" == "failure" ]; then 
+      #       echo "SLACK_COLOR=f71414" >> $GITHUB_ENV
+      #     else 
+      #       echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
+      #     fi
  
-      - name: 📩 POST MESSAGE TO SLACK
-        if: always()
-        id: slack-message
-        uses: slackapi/slack-github-action@v1.26.0
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
-        with:
-          channel-id: 'C072KH2MPBJ'
-          payload: |
-            {
-              "attachments": [
-                {
-                  "color": "${{ env.SLACK_COLOR }}",
-                  "blocks": [
-                    {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "🧪 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* has finished on `${{ github.event.repository.name }}` with the status: *${{ job.status }}*"
-                      }
-                    },
-                    {
-                      "type": "section",
-                      "text": {
-                        "type": "mrkdwn",
-                        "text": "🟢 Passed: ${{ steps.report.outputs.tests-passed }} | 🔴 Failed: ${{ steps.report.outputs.tests-failed }} | 🔵 Skipped: ${{ steps.report.outputs.tests-skipped }}"
-                      }
-                    },
-                    {
-                      "type": "actions",
-                      "elements": [
-                        {
-                          "type": "button",
-                          "text": {
-                            "type": "plain_text",
-                            "text": "MOCHAWESOME REPORT"
-                          },
-                          "url": "${{ env.REPORT_URL }}"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
+      # - name: 📩 POST MESSAGE TO SLACK
+      #   if: always()
+      #   id: slack-message
+      #   uses: slackapi/slack-github-action@v1.26.0
+      #   env:
+      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      #     BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+      #   with:
+      #     channel-id: 'C072KH2MPBJ'
+      #     payload: |
+      #       {
+      #         "attachments": [
+      #           {
+      #             "color": "${{ env.SLACK_COLOR }}",
+      #             "blocks": [
+      #               {
+      #                 "type": "section",
+      #                 "text": {
+      #                   "type": "mrkdwn",
+      #                   "text": "🧪 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* has finished on `${{ github.event.repository.name }}` with the status: *${{ job.status }}*"
+      #                 }
+      #               },
+      #               {
+      #                 "type": "section",
+      #                 "text": {
+      #                   "type": "mrkdwn",
+      #                   "text": "🟢 Passed: ${{ steps.report.outputs.tests-passed }} | 🔴 Failed: ${{ steps.report.outputs.tests-failed }} | 🔵 Skipped: ${{ steps.report.outputs.tests-skipped }}"
+      #                 }
+      #               },
+      #               {
+      #                 "type": "actions",
+      #                 "elements": [
+      #                   {
+      #                     "type": "button",
+      #                     "text": {
+      #                       "type": "plain_text",
+      #                       "text": "MOCHAWESOME REPORT"
+      #                     },
+      #                     "url": "${{ env.REPORT_URL }}"
+      #                   }
+      #                 ]
+      #               }
+      #             ]
+      #           }
+      #         ]
+      #       }
 
-      - uses: slackapi/slack-github-action@v1.27.0
-        if: ${{ always() }}
-        with:
-          channel-id: 'C072KH2MPBJ'
-          payload: |
-            {
-              "thread_ts": "${{ steps.slack-message.outputs.ts }}",
-              "text": "Deployment finished (Completed)"
-            }
+      # - uses: slackapi/slack-github-action@v1.27.0
+      #   if: ${{ always() }}
+      #   with:
+      #     channel-id: 'C072KH2MPBJ'
+      #     payload: |
+      #       {
+      #         "thread_ts": "${{ steps.slack-message.outputs.ts }}",
+      #         "text": "Deployment finished (Completed)"
+      #       }
 
 
         
-env: 
-  REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
-  RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+# env: 
+#   REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
+#   RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+#   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
