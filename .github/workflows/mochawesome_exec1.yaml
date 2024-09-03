@@ -11,9 +11,9 @@ on:
           - qpay-customer-ui
           - qpay-ui
 
-  schedule:
-    - cron: 25 18 * * *
-    - cron: 30 18 * * *
+  # schedule:
+  #   - cron: 25 18 * * *
+  #   - cron: 30 18 * * *
 
 jobs:
   test:
