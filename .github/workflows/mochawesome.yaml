@@ -1,19 +1,11 @@
 name: Run tests and publish report
 
 on: 
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      package:
-        description: "Package to test"
+      package-name:
         required: true
-        type: choice
-        options:
-          - qpay-customer-ui
-          - qpay-ui
-
-  schedule:
-    - cron: 40 11 * * *
-    - cron: 41 11 * * *
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}
@@ -29,10 +21,6 @@ jobs:
       pull-requests: write
       issues: read
     steps:
-      - run: echo "Running tests for ${{ inputs.package || (github.event.schedule == '40 11 * * *' && 'qpay-ui') || (github.event.schedule == '41 11 * * *' && 'qpay-customer-ui') }}"
-      - run: echo "Running tests for ${{ github.event.schedule }}"
-
-
       - name: Checkout
         uses: actions/checkout@v4
       # Install npm dependencies, cache them correctly
