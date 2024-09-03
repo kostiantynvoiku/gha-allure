@@ -1,8 +1,5 @@
 name: Run tests and publish report
 
-env:
-  qpay-ui-int: 35 7 * * *
-  qpay-customer-ui-int: 40 7 * * *
 on: 
   workflow_dispatch:
     inputs:
@@ -15,8 +12,8 @@ on:
           - qpay-ui
 
   schedule:
-    - cron: 30 11 * * *
-    - cron: 35 11 * * *
+    - cron: 40 11 * * *
+    - cron: 41 11 * * *
 
 concurrency:
   group: ${{ github.workflow }}
@@ -32,7 +29,7 @@ jobs:
       pull-requests: write
       issues: read
     steps:
-      - run: echo "Running tests for ${{ inputs.package || (github.event.schedule == '30 11 * * *' && 'qpay-ui') || (github.event.schedule == '35 11 * * *' && 'qpay-customer-ui') }}"
+      - run: echo "Running tests for ${{ inputs.package || (github.event.schedule == '40 11 * * *' && 'qpay-ui') || (github.event.schedule == '41 11 * * *' && 'qpay-customer-ui') }}"
       - run: echo "Running tests for ${{ github.event.schedule }}"
 
 
