@@ -43,128 +43,131 @@ jobs:
           scope: "@qodeup"
           cache: "pnpm"
 
-      - run: echo "Running tests for - ${{ inputs.package-name }}"
-      - run: echo "Schedule - ${{ github.event.schedule }}"
-
-
-
-
       - name: Run end-to-end tests
         id: cypress
         uses: cypress-io/github-action@v6
         with:
-          command: yarn run cy:run:parallel
+          command: pnpm run cy:run:parallel
 
-      # - name: Generate Mochawesome Report
-      #   if: always()
-      #   run: yarn run generate-mochawesome-report
+      - name: Generate Mochawesome Report
+        if: always()
+        run: pnpm generate-mochawesome-report
 
-      # - name: Deploy to GitHub Pages
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   if: always()
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./cypress/reports/html
-      #     destination_dir: cypress/build/${{ github.run_number }}
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./cypress/reports/html
+          destination_dir: cypress/build/${{ github.run_number }}
 
-      # - name: Publish Report
-      #   uses: turing85/publish-report@v2.0.1
-      #   if: ${{ always() }}
-      #   id: report
-      #   with:
-      #     report-fail-on-error: true # to fail when tests failed
-      #     report-name: Tests
-      #     report-path: 'cypress/reports/html/index.json'
-      #     report-reporter: mochawesome-json
-      #     comment-header: my-comment-header
-      #     comment-message-success: |
-      #         ## 🧪 Cypress Results
-      #         ### 🥳  {0} failed
+      - name: Publish Report
+        uses: turing85/publish-report@v2.0.1
+        if: ${{ always() }}
+        id: report
+        with:
+          report-fail-on-error: true # to fail when tests failed
+          report-name: Tests
+          report-path: 'cypress/reports/html/index.json'
+          report-reporter: mochawesome-json
+          comment-header: my-comment-header
+          comment-message-success: |
+              ## 🧪 Cypress Results
+              ### 🥳  {0} failed
               
-      #         | Passed | Failed | Skipped |
-      #         |--------|--------|---------|
-      #         | ✅ {1} | ❌ {2} | ⚠️ {3}   |
+              | Passed | Failed | Skipped |
+              |--------|--------|---------|
+              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
 
-      #         You can see the HTML report [here](${{ env.REPORT_URL }}).
-      #     comment-message-failure: |
-      #         ## 🧪 Cypress Results
-      #         ### 😔 {0} failed
+              You can see the HTML report [here](${{ env.REPORT_URL }}).
+          comment-message-failure: |
+              ## 🧪 Cypress Results
+              ### 😔 {0} failed
 
-      #         | Passed | Failed | Skipped |
-      #         |--------|--------|---------|
-      #         | ✅ {1} | ❌ {2} | ⚠️ {3}   |
+              | Passed | Failed | Skipped |
+              |--------|--------|---------|
+              | ✅ {1} | ❌ {2} | ⚠️ {3}   |
 
-      #         You can see the HTML report [here](${{ env.REPORT_URL }}).
+              You can see the HTML report [here](${{ env.REPORT_URL }}).
 
-      # - name: 📦 DEFINE VARS FOR SLACK
-      #   if: always()
-      #   run: |
-      #     if [ "${{ job.status }}" == "failure" ]; then 
-      #       echo "SLACK_COLOR=f71414" >> $GITHUB_ENV
-      #     else 
-      #       echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
-      #     fi
+      - name: 📦 DEFINE VARS FOR SLACK
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "failure" ]; then 
+            echo "SLACK_COLOR=f71414" >> $GITHUB_ENV
+          else 
+            echo "SLACK_COLOR=28a745" >> $GITHUB_ENV
+          fi
  
-      # - name: 📩 POST MESSAGE TO SLACK
-      #   if: always()
-      #   id: slack-message
-      #   uses: slackapi/slack-github-action@v1.26.0
-      #   env:
-      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      #     BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
-      #   with:
-      #     channel-id: 'C072KH2MPBJ'
-      #     payload: |
-      #       {
-      #         "attachments": [
-      #           {
-      #             "color": "${{ env.SLACK_COLOR }}",
-      #             "blocks": [
-      #               {
-      #                 "type": "section",
-      #                 "text": {
-      #                   "type": "mrkdwn",
-      #                   "text": "🧪 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* has finished on `${{ github.event.repository.name }}` with the status: *${{ job.status }}*"
-      #                 }
-      #               },
-      #               {
-      #                 "type": "section",
-      #                 "text": {
-      #                   "type": "mrkdwn",
-      #                   "text": "🟢 Passed: ${{ steps.report.outputs.tests-passed }} | 🔴 Failed: ${{ steps.report.outputs.tests-failed }} | 🔵 Skipped: ${{ steps.report.outputs.tests-skipped }}"
-      #                 }
-      #               },
-      #               {
-      #                 "type": "actions",
-      #                 "elements": [
-      #                   {
-      #                     "type": "button",
-      #                     "text": {
-      #                       "type": "plain_text",
-      #                       "text": "MOCHAWESOME REPORT"
-      #                     },
-      #                     "url": "${{ env.REPORT_URL }}"
-      #                   }
-      #                 ]
-      #               }
-      #             ]
-      #           }
-      #         ]
-      #       }
+      - name: 📩 POST MESSAGE TO SLACK
+        if: always()
+        id: slack-message
+        uses: slackapi/slack-github-action@v1.26.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+        with:
+          channel-id: 'C072KH2MPBJ'
+          payload: |
+            {
+              "attachments": [
+                {
+                  "color": "${{ env.SLACK_COLOR }}",
+                  "blocks": [
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "🧪 Test run *<${{ env.RUN_URL }}|#${{ github.run_number }}>* has finished on `${{ github.event.repository.name }}` with the status: *${{ job.status }}*"
+                      }
+                    },
+                    {
+                      "type": "section",
+                      "text": {
+                        "type": "mrkdwn",
+                        "text": "🟢 Passed: ${{ steps.report.outputs.tests-passed }} | 🔴 Failed: ${{ steps.report.outputs.tests-failed }} | 🔵 Skipped: ${{ steps.report.outputs.tests-skipped }}"
+                      }
+                    },
+                    {
+                      "type": "actions",
+                      "elements": [
+                        {
+                          "type": "button",
+                          "text": {
+                            "type": "plain_text",
+                            "text": "MOCHAWESOME REPORT"
+                          },
+                          "url": "${{ env.REPORT_URL }}"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "context",
+                      "elements": [
+                        {
+                          "type": "mrkdwn",
+                          "text": "🤖️ Triggered by ${{ github.event_name }}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
 
-      # - uses: slackapi/slack-github-action@v1.27.0
-      #   if: ${{ always() }}
-      #   with:
-      #     channel-id: 'C072KH2MPBJ'
-      #     payload: |
-      #       {
-      #         "thread_ts": "${{ steps.slack-message.outputs.ts }}",
-      #         "text": "Deployment finished (Completed)"
-      #       }
+      - uses: slackapi/slack-github-action@v1.27.0
+        if: ${{ always() }}
+        with:
+          channel-id: 'C072KH2MPBJ'
+          payload: |
+            {
+              "thread_ts": "${{ steps.slack-message.outputs.ts }}",
+              "text": "Deployment finished (Completed)"
+            }
 
 
         
-# env: 
-#   REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
-#   RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-#   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+env: 
+  REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
+  RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

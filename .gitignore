@@ -4,3 +4,7 @@ cypress/reports
 cypress/screenshots
 cypress/videos
 cypress/results
+runner-results
+cypress/.tmp
+cypress/parallel-weights.json
+multi-reporter-config.json
