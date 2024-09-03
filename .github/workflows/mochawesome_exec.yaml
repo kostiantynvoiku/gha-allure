@@ -12,17 +12,16 @@ on:
           - qpay-ui
 
   schedule:
-    - cron: "*/5 * * * *"
-    - cron: "*/6 * * * *"
+    - cron: 20 * * * *
+    - cron: 21 * * * *
 
 jobs:
-      
   test:
     name: "Run E2E tests"
     uses: ./.github/workflows/mochawesome.yaml
     with:
       package-name: |
         ${{ inputs.package 
-            || (github.event.schedule == '*/5 * * * *' && 'qpay-ui') 
-            || (github.event.schedule == '*/6 * * * *' && 'qpay-customer-ui') }}
+            || (github.event.schedule == '20 * * * *' && 'qpay-ui') 
+            || (github.event.schedule == '21 * * * *' && 'qpay-customer-ui') }}
 
