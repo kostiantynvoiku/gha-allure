@@ -1,4 +1,4 @@
-name: Run tests and publish report
+name: Run tests with workflow_call
 
 on: 
   workflow_dispatch:
@@ -12,8 +12,8 @@ on:
           - qpay-ui
 
   schedule:
-    - cron: '*/5 13 * * *'
-    - cron: '*/10 13 * * *'
+    - cron: '*/5 * * * *'
+    - cron: '*/10 * * * *'
 
 jobs:
   test:
