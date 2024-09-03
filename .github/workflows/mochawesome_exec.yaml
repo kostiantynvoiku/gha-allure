@@ -12,8 +12,8 @@ on:
           - qpay-ui
 
   schedule:
-    - cron: 20 * * * *
-    - cron: 21 * * * *
+    - cron: 24 12 * * *
+    - cron: 25 12 * * *
 
 jobs:
   test:
@@ -22,6 +22,6 @@ jobs:
     with:
       package-name: |
         ${{ inputs.package 
-            || (github.event.schedule == '20 * * * *' && 'qpay-ui') 
-            || (github.event.schedule == '21 * * * *' && 'qpay-customer-ui') }}
+            || (github.event.schedule == '24 12 * * *' && 'qpay-ui') 
+            || (github.event.schedule == '25 12 * * *' && 'qpay-customer-ui') }}
 
