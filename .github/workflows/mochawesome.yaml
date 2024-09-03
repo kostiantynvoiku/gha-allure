@@ -7,11 +7,6 @@ on:
         required: true
         type: string
 
-  schedule:
-    - cron: '15 13 * * *'
-    - cron: '20 13 * * *'
-              
-
 concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: false
