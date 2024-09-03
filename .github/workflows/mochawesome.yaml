@@ -3,8 +3,8 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: 45 13 * * *
-    - cron: 44 13 * * *
+    - cron: 35 7 * * *
+    - cron: 40 7 * * *
 
 concurrency:
   group: ${{ github.workflow }}
@@ -20,9 +20,9 @@ jobs:
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "package_name=workflow_dispatch" >> $GITHUB_OUTPUT
-          elif [[ "${{ github.event.schedule }}" == "0 2 * * *" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "35 7 * * *" ]]; then
             echo "package_name=qpay-ui" >> $GITHUB_OUTPUT
-          elif [[ "${{ github.event.schedule }}" == "0 3 * * *" ]]; then
+          elif [[ "${{ github.event.schedule }}" == "40 7 * * *" ]]; then
             echo "package_name=qpay-customer-ui" >> $GITHUB_OUTPUT
           fi
     outputs:
