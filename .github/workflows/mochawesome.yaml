@@ -26,7 +26,6 @@ jobs:
       pull-requests: write
       issues: read
     steps:
-      - run: echo "Running tests for ${{ inputs.package-name }}"
       - name: Checkout
         uses: actions/checkout@v4
       # Install npm dependencies, cache them correctly
@@ -48,6 +47,11 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
           scope: "@qodeup"
           cache: "pnpm"
+
+      - run: echo "Running tests for - ${{ inputs.package-name }}"
+      - run: echo "Schedule - ${{ github.event.schedule }}"
+
+
 
 
       - name: Run end-to-end tests
