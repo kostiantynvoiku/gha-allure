@@ -12,8 +12,8 @@ on:
           - qpay-ui
 
   schedule:
-    - cron: 50 11 * * *
-    - cron: 51 11 * * *
+    - cron: 52 11 * * *
+    - cron: 53 11 * * *
 
 jobs:
       
