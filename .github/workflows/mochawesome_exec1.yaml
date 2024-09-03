@@ -19,6 +19,7 @@ jobs:
   test:
     name: "Run E2E tests"
     uses: ./.github/workflows/mochawesome.yaml
+    secrets: inherit
     with:
       package-name: |
         ${{ inputs.package 
