@@ -12,8 +12,8 @@ on:
           - qpay-ui
 
   schedule:
-    - cron: '30 13 * * *'
-    - cron: '35 13 * * *'
+    - cron: 30 13 * * *
+    - cron: 35 13 * * *
 
 jobs:
   test:
