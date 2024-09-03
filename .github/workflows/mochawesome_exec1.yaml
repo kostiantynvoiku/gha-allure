@@ -12,8 +12,8 @@ on:
           - qpay-ui
 
   schedule:
-    - cron: 35 13 * * *
-    - cron: 40 13 * * *
+    - cron: 0 15 * * *
+    - cron: 5 15 * * *
 
 jobs:
   test:
@@ -21,7 +21,6 @@ jobs:
     uses: ./.github/workflows/mochawesome.yaml
     with:
       package-name: |
-        "${{ inputs.package 
-            || (github.event.schedule == '40 13 * * *' && 'qpay-ui') 
-            || (github.event.schedule == '35 13 * * *' && 'qpay-customer-ui') }}"
-
+        ${{ inputs.package 
+            || (github.event.schedule == '0 15 * * *' && 'qpay-ui') 
+            || (github.event.schedule == '5 15 * * *' && 'qpay-customer-ui') }}
