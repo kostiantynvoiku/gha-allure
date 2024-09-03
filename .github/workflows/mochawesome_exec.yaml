@@ -1,0 +1,28 @@
+name: Run tests and publish report
+
+on: 
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "Package to test"
+        required: true
+        type: choice
+        options:
+          - qpay-customer-ui
+          - qpay-ui
+
+  schedule:
+    - cron: 50 11 * * *
+    - cron: 51 11 * * *
+
+jobs:
+      
+  test:
+    name: "Run E2E tests"
+    uses: ./.github/workflows/mochawesome.yaml
+    with:
+      package-name: |
+        ${{ inputs.package 
+            || (github.event.schedule == '40 11 * * *' && 'qpay-ui') 
+            || (github.event.schedule == '41 11 * * *' && 'qpay-customer-ui') }}
+
