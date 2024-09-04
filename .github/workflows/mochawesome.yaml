@@ -83,7 +83,7 @@ jobs:
       - name: "Download test results artifacts"
         uses: actions/download-artifact@v4
         with:
-          path: cypress
+          path: cypress/reports
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

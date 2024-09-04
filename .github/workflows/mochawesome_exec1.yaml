@@ -29,6 +29,7 @@ jobs:
     uses: ./.github/workflows/mochawesome.yaml
     secrets: inherit
     strategy:
+      fail-fast: false
       matrix:
         instance:
           - package-name: qpay-ui
