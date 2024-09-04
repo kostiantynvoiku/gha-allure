@@ -11,7 +11,7 @@ on:
         type: string
 
 concurrency:
-  group: ${{ github.workflow }}
+  group: e2e-tests
   cancel-in-progress: false
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
       pull-requests: write
       issues: read
     steps:
-      - run: echo "Running tests for ${{ inputs.package-name }} on ${{ inputs.environment }}end of the line"
+      - run: echo "Running tests for ${{ inputs.package-name }} on ${{ inputs.environment }} end of the line"
 
       - name: Checkout
         uses: actions/checkout@v4
