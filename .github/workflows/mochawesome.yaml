@@ -99,24 +99,19 @@ jobs:
       #     name: ${{ inputs.package-name }}-${{ inputs.environment }}
       #     path: ./cypress/reports/html
 
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-        with:
-          artifact_name: cypress-split-results-${{ inputs.package-name }}-${{ inputs.environment }}
-
-      - run: |
-          echo "Deployment status: ${{ steps.deployment.outputs.page_url }}"
-
-      - run: ls -la cypress/reports
-
       # - name: Deploy to GitHub Pages
-      #   uses: peaceiris/actions-gh-pages@v4
-      #   if: always()
+      #   id: deployment
+      #   uses: actions/deploy-pages@v4
       #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_dir: ./cypress/reports/html
-      #     destination_dir: cypress/build/${{ github.run_number }}/${{ inputs.package-name }}/${{ inputs.environment }}
+      #     artifact_name: cypress-split-results-${{ inputs.package-name }}-${{ inputs.environment }}
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./cypress/reports/html
+          destination_dir: cypress/build/${{ github.run_number }}/${{ inputs.package-name }}/${{ inputs.environment }}
 
       - name: Publish Report
         uses: turing85/publish-report@v2.0.1
