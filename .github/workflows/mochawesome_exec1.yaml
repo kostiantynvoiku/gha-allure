@@ -24,7 +24,7 @@ on:
     - cron: 40 9 * * *
 
 concurrency:
-  group: e2e-tests-run
+  group: ${{ github.workflow }}
   cancel-in-progress: false
 
 jobs:
