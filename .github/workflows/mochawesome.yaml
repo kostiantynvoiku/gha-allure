@@ -10,12 +10,13 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: e2e-tests
+  cancel-in-progress: false
+
 jobs:
       
   test:
-    concurrency:
-      group: e2e-tests-${{ inputs.environment }}
-      cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
       checks: write
@@ -74,9 +75,6 @@ jobs:
       contents: write
       pull-requests: write
       issues: read
-    concurrency:
-      group: e2e-tests-report
-      cancel-in-progress: false
 
     steps:
       - name: "Download test results artifacts"
@@ -89,7 +87,7 @@ jobs:
       - run: ls -la cypress/reports
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
