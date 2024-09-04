@@ -79,22 +79,37 @@ jobs:
       cancel-in-progress: false
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: "Download test results artifacts"
         uses: actions/download-artifact@v4
         with:
           name: cypress-split-results-${{ inputs.package-name }}-${{ inputs.environment }}
           path: cypress/reports
 
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./cypress/reports/html
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
       - run: ls -la
       - run: ls -la cypress/reports
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        if: always()
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./cypress/reports/html
-          destination_dir: cypress/build/${{ github.run_number }}/${{ inputs.package-name }}/${{ inputs.environment }}
+      # - name: Deploy to GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v4
+      #   if: always()
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./cypress/reports/html
+      #     destination_dir: cypress/build/${{ github.run_number }}/${{ inputs.package-name }}/${{ inputs.environment }}
 
       - name: Publish Report
         uses: turing85/publish-report@v2.0.1
