@@ -20,7 +20,7 @@ jobs:
       pull-requests: write
       issues: read
     concurrency:
-      group: e2e-tests-${{ inputs.environment }}
+      group: cypress-e2e-tests
       cancel-in-progress: false
     steps:
       - run: echo "Running tests for ${{ inputs.package-name }} on ${{ inputs.environment }} end of the line"
