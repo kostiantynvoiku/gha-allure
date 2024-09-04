@@ -203,7 +203,7 @@ jobs:
                       "elements": [
                         {
                           "type": "mrkdwn",
-                          "text": "🤖️ This job was triggered by ${{ github.triggering_actor }}"
+                          "text": "🤖️ This job was triggered by ${{ github.event_name == 'workflow_dispatch' && github.triggering_actor || github.event_name }}"
                         }
                       ]
                     }
