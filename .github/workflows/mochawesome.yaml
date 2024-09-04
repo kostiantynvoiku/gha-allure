@@ -21,6 +21,8 @@ jobs:
       pull-requests: write
       issues: read
     steps:
+      - run: echo "Running tests for ${{ inputs.package-name }}"
+      
       - name: Checkout
         uses: actions/checkout@v4
       # Install npm dependencies, cache them correctly
