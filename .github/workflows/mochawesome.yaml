@@ -11,7 +11,7 @@ on:
         type: string
 
 concurrency:
-  group: e2e-tests
+  group: e2e-tests-${{ inputs.environment }}
   cancel-in-progress: false
 
 jobs:
