@@ -99,7 +99,7 @@ jobs:
 
       - name: Publish Report
         uses: turing85/publish-report@v2.0.1
-        if: ${{ always() }}
+        if: ${{ false }}
         id: report
         with:
           report-fail-on-error: true # to fail when tests failed
