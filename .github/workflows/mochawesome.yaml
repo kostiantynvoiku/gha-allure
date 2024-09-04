@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: cypress-split-results-e2e
+          name: cypress-split-results-${{ github.run_id }}
           path: ./cypress/reports/
           if-no-files-found: ignore
 
