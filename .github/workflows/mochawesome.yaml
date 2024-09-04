@@ -83,6 +83,7 @@ jobs:
       - name: "Download test results artifacts"
         uses: actions/download-artifact@v4
         with:
+          name: cypress-split-results-${{ inputs.package-name }}-${{ inputs.environment }}
           path: cypress/reports
 
       - run: ls -la
