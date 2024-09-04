@@ -105,7 +105,9 @@ jobs:
         with:
           artifact_name: ${{ inputs.package-name }}-${{ inputs.environment }}
 
-      - run: ls -la
+      - run: |
+          echo "Deployment status: ${{ steps.deployment.outputs.page_url }}"
+          
       - run: ls -la cypress/reports
 
       # - name: Deploy to GitHub Pages
