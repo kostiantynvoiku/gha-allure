@@ -85,6 +85,9 @@ jobs:
         with:
           path: cypress/reports
 
+      - run: ls -la
+      - run: ls -la cypress/reports
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         if: always()
