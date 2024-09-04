@@ -28,9 +28,6 @@ jobs:
     name: "Run E2E tests"
     uses: ./.github/workflows/mochawesome.yaml
     secrets: inherit
-    concurrency:
-      group: e2e-tests
-      cancel-in-progress: false
     strategy:
       matrix:
         instance:
