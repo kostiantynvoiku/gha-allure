@@ -202,6 +202,6 @@ jobs:
             }
 
 env: 
-  REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}
+  REPORT_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/cypress/build/${{ github.run_number }}/${{ inputs.package-name }}/${{ inputs.environment }}
   RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
