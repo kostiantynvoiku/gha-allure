@@ -87,27 +87,27 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: "Download test results artifacts"
-        uses: actions/download-artifact@v4
-        with:
-          name: cypress-split-results-${{ inputs.package-name }}-${{ inputs.environment }}
-          path: cypress/reports
+      # - name: "Download test results artifacts"
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: cypress-split-results-${{ inputs.package-name }}-${{ inputs.environment }}
+      #     path: cypress/reports
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          name: ${{ inputs.package-name }}-${{ inputs.environment }}
-          path: ./cypress/reports/html
+      # - name: Upload artifact
+      #   uses: actions/upload-pages-artifact@v3
+      #   with:
+      #     name: ${{ inputs.package-name }}-${{ inputs.environment }}
+      #     path: ./cypress/reports/html
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: ${{ inputs.package-name }}-${{ inputs.environment }}
+          artifact_name: cypress-split-results-${{ inputs.package-name }}-${{ inputs.environment }}
 
       - run: |
           echo "Deployment status: ${{ steps.deployment.outputs.page_url }}"
-          
+
       - run: ls -la cypress/reports
 
       # - name: Deploy to GitHub Pages
