@@ -21,6 +21,6 @@ jobs:
     uses: ./.github/workflows/mochawesome.yaml
     secrets: inherit
     with:
-      package-name: >
+      package-name: |
         ${{ inputs.package || (github.event.schedule == '5 7 * * *' && 'qpay-ui')
-            || (github.event.schedule == '10 7 * * *' && 'qpay-customer-ui') }}
+            || (github.event.schedule == '10 7 * * *' && 'qpay-customer-ui') }}\n
