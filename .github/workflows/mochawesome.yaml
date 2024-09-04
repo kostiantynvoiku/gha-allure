@@ -10,13 +10,12 @@ on:
         required: true
         type: string
 
-concurrency:
-  group: e2e-tests-${{ inputs.environment }}
-  cancel-in-progress: false
-
 jobs:
       
   test:
+    concurrency:
+      group: e2e-tests-${{ inputs.environment }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
       checks: write
