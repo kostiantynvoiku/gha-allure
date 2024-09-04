@@ -33,11 +33,18 @@ jobs:
       cancel-in-progress: false
     strategy:
       matrix:
-        package-name: ['qpay-ui', 'qpay-ui', 'qpay-customer-ui', 'qpay-customer-ui']
-        environment: ['int', 'stg', 'int', 'stg']
+        instance:
+          - package-name: qpay-ui
+            environment: int
+          - package-name: qpay-customer-ui
+            environment: int
+          - package-name: qpay-ui
+            environment: stg
+          - package-name: qpay-customer-ui
+            environment: stg
     with:
-      package-name: ${{ matrix.package-name }}
-      environment: ${{ matrix.environment }}
+      package-name: ${{ matrix.instance.package-name }}
+      environment: ${{ matrix.instance.environment }}
       # package-name: >-
       #   ${{ inputs.package
       #     || (github.event.schedule == '35 9 * * *' && 'qpay-ui')
