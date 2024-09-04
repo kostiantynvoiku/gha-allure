@@ -95,7 +95,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./cypress/reports/html
-          destination_dir: cypress/build/${{ github.run_number }}
+          destination_dir: cypress/build/${{ github.run_number }}/${{ inputs.package-name }}/${{ inputs.environment }}
 
       - name: Publish Report
         uses: turing85/publish-report@v2.0.1
