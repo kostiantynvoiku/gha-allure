@@ -146,7 +146,7 @@ jobs:
                       "elements": [
                         {
                           "type": "mrkdwn",
-                          "text": "🤖️ This job was triggered by ${{ github.event_name }}"
+                          "text": "🤖️ This job was triggered by ${{ github.triggering_actor }}"
                         }
                       ]
                     }
