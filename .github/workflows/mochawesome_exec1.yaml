@@ -10,6 +10,14 @@ on:
         options:
           - qpay-customer-ui
           - qpay-ui
+      environment:
+        description: "Environment to run the tests"
+        required: true
+        type: choice
+        options:
+          - int
+          - stg
+        default: "int"
 
   schedule:
     - cron: 35 9 * * *
@@ -20,9 +28,15 @@ jobs:
     name: "Run E2E tests"
     uses: ./.github/workflows/mochawesome.yaml
     secrets: inherit
+    strategy:
+      matrix:
+        package-name: ['qpay-ui', 'qpay-ui', 'qpay-customer-ui', 'qpay-customer-ui']
+        environment: ['int', 'stg', 'int', 'stg']
     with:
-      package-name: >-
-        ${{ inputs.package
-          || (github.event.schedule == '35 9 * * *' && 'qpay-ui')
-          || (github.event.schedule == '40 9 * * *' && 'qpay-customer-ui') 
-        }}
+      package-name: ${{ matrix.package-name }}
+      environment: ${{ matrix.environment }}
+      # package-name: >-
+      #   ${{ inputs.package
+      #     || (github.event.schedule == '35 9 * * *' && 'qpay-ui')
+      #     || (github.event.schedule == '40 9 * * *' && 'qpay-customer-ui') 
+      #   }}
