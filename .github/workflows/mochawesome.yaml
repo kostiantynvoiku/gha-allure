@@ -74,6 +74,7 @@ jobs:
       contents: write
       pull-requests: write
       issues: read
+      id-token: write
     concurrency:
       group: publish-e2e-test-results
       cancel-in-progress: false
