@@ -19,9 +19,9 @@ on:
           - stg
         default: "int"
 
-  # schedule:
-  #   - cron: 15 13 * * *
-  #   - cron: 20 13 * * *
+  schedule:
+    - cron: 46 8 * * *
+    - cron: 47 8 * * *
 
 # concurrency:
 #   group: ${{ github.workflow }}
@@ -49,6 +49,6 @@ jobs:
       environment: ${{ inputs.environment }}
       package-name: >-
         ${{ inputs.package
-          || (github.event.schedule == '35 9 * * *' && 'qpay-ui')
-          || (github.event.schedule == '40 9 * * *' && 'qpay-customer-ui') 
+          || (github.event.schedule == '46 8 * * *' && 'qpay-ui')
+          || (github.event.schedule == '47 8 * * *' && 'qpay-customer-ui') 
         }}
