@@ -19,9 +19,9 @@ on:
           - stg
         default: "int"
 
-  schedule:
-    - cron: 46 8 * * *
-    - cron: 47 8 * * *
+  # schedule:
+  #   - cron: 46 8 * * *
+  #   - cron: 47 8 * * *
 
 # concurrency:
 #   group: ${{ github.workflow }}
