@@ -198,12 +198,7 @@ jobs:
                       "elements": [
                         {
                           "type": "mrkdwn",
-                          "text": |
-                            "This job was triggered by ${{
-                               github.event_name == 'workflow_dispatch' && github.triggering_actor ||
-                               github.event_name }} ${{ 
-                               github.event_name == 'workflow_dispatch' && '🤖️' || 
-                               '🕒' }}"
+                          "text": "🤖️ This job was triggered by ${{ github.event_name == 'workflow_dispatch' && github.triggering_actor || github.event_name }} ${{ github.event_name == 'push' && '🔀' || github.event_name == 'cron' && '🕒' || '🤖'}}"
                         }
                       ]
                     }
